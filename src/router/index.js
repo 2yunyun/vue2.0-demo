@@ -6,57 +6,62 @@ const router = new VueRouter({
   base: '/vue2.0-demo/',
 	routes:[
   {
-    name: 'home',
+    name: '首页',
     path:'/home',
     component: require('../views/home/home.vue'),
     children: [
         {
-          path: 'movie',
-          name: 'movie',
-          component: require('../components/movie/movie.vue'),
+          path: 'zixun',
+          name: '资讯中心',
+          component: require('../components/zixun/zixun.vue'),
         },
         {
-          path: 'music',
-          name: 'music',
-          component: require('../components/music/music.vue'),
+          path: 'lottery',
+          name: '开奖',
+          component: require('../components/lottery/lottery.vue'),
         },
         {
-          path: 'book',
-          name: 'book',
-          component: require('../components/book/book.vue')
+          path: 'sendeveryday',
+          name: '天天送',
+          component: require('../components/sendeveryday/sendeveryday.vue')
         },
         {
-          path: 'photo',
-          name: 'photo',
-          component: require('../components/photo/photo.vue')
+          path: 'buytogether',
+          name: '合买',
+          component: require('../components/buytogether/buytogether.vue')
+        },
+        {
+          path: 'mine',
+          name: '我的',
+          component: require('../components/mine/mine.vue')
         }
       ]
   },
   {
-    name: 'login', path:'/login',component: require('../views/login/login.vue')
+    name: '登录', path:'/login',component: require('../views/login/login.vue')
   },  
   {
-    name: 'regist', path:'/regist',component: require('../views/regist/regist.vue')
+    name: '注册', path:'/regist',component: require('../views/regist/regist.vue')
   },  
   {
-    path: '/home/movie/detail/:id',
-    name: 'movie-detail',
-    component: require('../components/movie/movie_detail.vue'),
+    path: '/home/zixun/detail/:id',
+    name: 'zixun-detail',
+    component: require('../components/zixun/zixun_detail.vue'),
   },
   {
-    path: '/home/music/list/:listId',
+    path: '/home/lottery/list/:listId',
     name: 'music-list',
-    component: require('../components/music/music_list.vue'),
+    component: require('../components/lottery/music_list.vue'),
   },
   {
-    path: '/home/music/list/:listId/song/:songId',
+    path: '/home/lottery/list/:listId/song/:songId',
     name: 'music-play',
-    component: require('../components/music/music_play.vue'),
+    component: require('../components/lottery/music_play.vue'),
   },
   {
-    path: '/home/photo/detail/:id',
+    path: '/home/buytogether/detail/:id',
     name: 'photo-detail',
-    component: require('../components/photo/photo_detail.vue'),
+    component: require('../components/buytogether/photo_detail.vue'),
   },
   {
     path:'*', redirect: './login'

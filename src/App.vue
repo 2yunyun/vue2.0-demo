@@ -145,7 +145,7 @@ export default {
     checkLogin(){
       if(Util.isCurrentUser()){
         console.log("处于登录状态");
-        if(this.$route.name === 'login') this.$router.push({name:'movie'});
+        if(this.$route.name === 'login') this.$router.push({name:'zixun'});
       }else{
         console.log(this.$router.name);
         if(this.$route.name === 'regist') return;
@@ -188,7 +188,7 @@ export default {
     }
   },
   components: {
-    home
+    // home
   }
 }
 </script>

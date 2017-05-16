@@ -2,7 +2,7 @@
   "name": "vue-demo",
   "description": "A Vue.js project",
   "version": "1.0.0",
-  "author": "alex1504 <alex1504@163.com>",
+  "author": "",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "qs": "^6.4.0",
     "vue": "^2.1.0",
     "vue-material": "^0.5.2",
     "vue-router": "^2.1.1",

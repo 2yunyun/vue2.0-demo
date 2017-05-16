@@ -6,11 +6,10 @@
 			<md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
 			    <md-toolbar class="md-large">
 			      <div class="md-toolbar-container">
-			        <h3 class="md-title">Vuejs2.0-demo</h3>
+			        <h3 class="md-title">Vuejs2.0</h3>
 			      </div>
 			    </md-toolbar>
-			    <p class="soucecode">SouceCode:</p>
-			    <p><a href="https://github.com/alex1504/vue2.0-demo">https://github.com/alex1504/vue2.0-demo</a></p>
+			 
 			</md-sidenav>
 			<keep-alive>
 				<router-view></router-view>
@@ -19,9 +18,10 @@
 	</div>
 </template>
 <script>
+
 import navBar from "../../components/common/navbar.vue"
-import movie from "../../components/movie/movie.vue"
-import music from "../../components/music/music.vue"
+import zixun from "../../components/zixun/zixun.vue"
+import lottery from "../../components/lottery/lottery.vue"
 export default {
 	data(){
 		return{
@@ -49,8 +49,8 @@ export default {
 	},
 	components: {
 		navBar,
-		movie,
-		music,
+		zixun,
+		lottery
 	}
 }
 </script>
