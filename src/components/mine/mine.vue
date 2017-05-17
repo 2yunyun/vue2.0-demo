@@ -1,5 +1,34 @@
 <template>
-<div>
-	<h1>我的模块</h1>
+<div id="mine">
+	
 </div>
 </template>
+
+<script>
+	export default {
+		data () {
+			return {
+				
+
+			}
+		},
+		mounted() {
+			
+
+		},		
+		components: {
+			
+		}
+	}
+</script>
+<style lang="scss" scoped>
+	#mine{
+		margin-top: 72px;
+	}
+
+	
+</style>
+
+
+
+

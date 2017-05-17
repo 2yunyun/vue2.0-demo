@@ -1,8 +1,8 @@
 <template>
 	<div id="navbar">
-		<md-theme :md-name="theme">
+		<md-theme :md-name="whiteForm">
 			<transition name="slideT">
-				<md-toolbar class="top-nav">
+				<md-toolbar class="top-nav" v-if="activeNav">
 					<!-- <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
 						<md-icon><i class="iconfont icon-menu"></i></md-icon>
 					</md-button> -->
@@ -48,6 +48,7 @@
 			return {
 				isActive: [true,false,false,false],
 				isScrollDown: false,
+				activeNav:true
 			}
 		},
 		computed: {
@@ -76,7 +77,7 @@
 			go(index){
 				switch(index) {
 					case 0:
-					this.$router.push({name:'资讯中心'});
+					this.$router.push({name:'entry'});
 					break;
 					case 1:
 					this.$router.push({name:'开奖'});
@@ -95,7 +96,7 @@
 			setActiveNav: function(){
 				/*根据路由显示当前导航按钮*/
 				var mapRoute = {
-					"资讯中心": 0,
+					"entry": 0,
 					"开奖": 1,
 					"天天送":  2,
 					'合买': 3,
@@ -117,6 +118,11 @@
 		top:0;
 		width:100%;
 		z-index: 3;
+		color:#fff;
+
+	}
+	.md-theme-default.md-toolbar{
+		background:red;
 		color:#fff;
 	}
 	.md-bottom-bar{
@@ -147,6 +153,13 @@
 	}
 	.icon-logout{
 		font-size: 24px;
+	}
+
+	.md-theme-default.md-bottom-bar.md-shift .md-bottom-bar-item{
+		color:red;
+	}
+	.md-theme-default.md-bottom-bar.md-shift .md-bottom-bar-item.md-active{
+		color:red;
 	}
 </style>
 

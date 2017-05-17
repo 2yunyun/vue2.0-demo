@@ -1,23 +1,23 @@
 <template>
     <div id="movielist-top250" class="j-container">
-      <div class="j-content">
-        <md-list class="custom-list md-triple-line">
-            <md-list-item v-for="news in zixunLists" @click="getMovieDetail(news.id)">
-                <md-avatar>
-                  <img :src="news.icon_url" alt="People">
-              </md-avatar>
+        <div class="j-content">
+            <md-list class="custom-list md-triple-line">
+                <md-list-item v-for="news in zixunLists" @click="getZixunDetail(news.id)">
+                    <md-avatar>
+                      <img :src="news.icon_url" alt="People">
+                  </md-avatar>
 
-              <div class="md-list-text-container">
-                  <span>{{news.title}}</span>
-                  <p>{{formatDate(news.update_time)}}</p>
-              </div>
-              
-              <md-divider class="md-inset"></md-divider>
-          </md-list-item>
-      </md-list>
-      <md-spinner :class="spinnerClass" :md-size="60" md-indeterminate v-show='spinnerFlag'></md-spinner>
+                  <div class="md-list-text-container">
+                      <span>{{news.title}}</span>
+                      <p>{{formatDate(news.update_time)}}</p>
+                  </div>
+                  
+                  <md-divider class="md-inset"></md-divider>
+              </md-list-item>
+          </md-list>
+          <md-spinner :class="spinnerClass" :md-size="60" md-indeterminate v-show='spinnerFlag'></md-spinner>
+      </div>
   </div>
-</div>
 
 </template>
 <script>
@@ -59,7 +59,7 @@ watch: {
 }
 },
 methods: {
-    getMovieDetail(id){
+    getZixunDetail(id){
       this.$router.push({ name: 'zixun-detail', params: { id: id }})
   },
   isTouchScreenBtm: function(e){

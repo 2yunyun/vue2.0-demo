@@ -1,16 +1,9 @@
 <template>
 	<div id="home">
 		<!-- <audio :src="audioSrc" id="audio"></audio> -->
-		<md-theme :md-name="theme">
+		<md-theme :md-name="whiteForm">
 			<navBar @toggleLeftSidenav="toggleLeftSidenav"></navBar>
-			<md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
-			    <md-toolbar class="md-large">
-			      <div class="md-toolbar-container">
-			        <h3 class="md-title">Vuejs2.0</h3>
-			      </div>
-			    </md-toolbar>
-			 
-			</md-sidenav>
+			
 			<keep-alive>
 				<router-view></router-view>
 			</keep-alive>
@@ -19,9 +12,9 @@
 </template>
 <script>
 
-import navBar from "../../components/common/navbar.vue"
-import zixun from "../../components/zixun/zixun.vue"
-import lottery from "../../components/lottery/lottery.vue"
+	import navBar from "../../components/common/navbar.vue"
+	import entry from "../entry/entry.vue"
+// import lottery from "../../components/lottery/lottery.vue"
 export default {
 	data(){
 		return{
@@ -37,41 +30,23 @@ export default {
 	},
 	methods: {
 		toggleLeftSidenav() {
-	      this.$refs.leftSidenav.toggle();
-	    },
+			this.$refs.leftSidenav.toggle();
+		},
 		open(ref) {
-	      console.log('Opened: ' + ref);
-	    },
-	    close(ref) {
-	      console.log('Closed: ' + ref);
-	    },
-	    
+			console.log('Opened: ' + ref);
+		},
+		close(ref) {
+			console.log('Closed: ' + ref);
+		},
+		
 	},
 	components: {
 		navBar,
-		zixun,
-		lottery
+		entry
+		// lottery
 	}
 }
 </script>
 <style lang="scss" scoped>
-.soucecode{
-	font-size: 16px;
-	padding: 20px 0;
-}
-a:not(.md-button):not(.md-bottom-bar-item){
-	text-decoration: underline;
-}
-.md-theme-blue a:not(.md-button), .md-theme-blue .soucecode{
-    color: #2196f3
-}
-.md-theme-teal a:not(.md-button), .md-theme-teal .soucecode{
-    color: #009688
-}
-.md-theme-brown a:not(.md-button), .md-theme-brown .soucecode{
-    color: #795548
-}
-.md-theme-indigo a:not(.md-button), .md-theme-indigo .soucecode{
-    color: #3f51b5
-}
+
 </style>

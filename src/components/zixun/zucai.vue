@@ -2,7 +2,7 @@
   <div id="movielist-comming" class="j-container">
    <div class="j-content">
     <md-list class="custom-list md-triple-line">
-      <md-list-item v-for="news in zixunLists" @click="getMovieDetail(news.id)">
+      <md-list-item v-for="news in zixunLists" @click="getZixunDetail(news.id)">
         <md-avatar>
           <img :src="news.icon_url" alt="People">
         </md-avatar>
@@ -58,7 +58,7 @@
       }
     },
     methods: {
-      getMovieDetail(id){
+      getZixunDetail(id){
         this.$router.push({ name: 'zixun-detail', params: { id: id }})
       },
       isTouchScreenBtm: function(e){

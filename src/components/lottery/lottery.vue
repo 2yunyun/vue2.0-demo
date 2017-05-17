@@ -1,8 +1,34 @@
 <template>
 	<div id="lottery">
-	<h1>开奖</h1>
 	</div>
 	
 </template>
+
+<script>
+	export default {
+		data () {
+			return {
+				
+
+			}
+		},
+		mounted() {
+			
+
+		},		
+		components: {
+			
+		}
+	}
+</script>
+<style lang="scss" scoped>
+	#lottery{
+		margin-top: 72px;
+	}
+
+	
+</style>
+
+
 
 

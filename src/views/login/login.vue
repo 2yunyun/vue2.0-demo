@@ -87,7 +87,7 @@ export default {
 
 			AV.User.logIn(username, pass).then(function (loginedUser) {
 			    setTimeout(function(){
-			    	this.$router.push({name:'movie'})
+			    	this.$router.push({name:'entry'})
 			    }.bind(this),600)
 			}.bind(this), function (error) {
 			    this.alert.content = '用户名和密码不匹配';

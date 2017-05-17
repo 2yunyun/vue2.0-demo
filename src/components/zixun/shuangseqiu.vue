@@ -2,7 +2,7 @@
   <div id="movielist-hot" class="j-container">
     <div class="j-content">
        <md-list class="custom-list md-triple-line">
-         <md-list-item v-for="news in zixunLists" @click="getMovieDetail(news.id)">
+         <md-list-item v-for="news in zixunLists" @click="getZixunDetail(news.id)">
             <md-avatar>
               <img :src="news.icon_url" alt="People">
           </md-avatar>
@@ -42,7 +42,7 @@ mounted:function(){
  this.scrContainer = this.$el;
  this.scrContent = this.$el.querySelector(".j-content")
  this.eleH = this.scrContent.offsetHeight;
- console.log(this.loadMore());
+ this.loadMore();
  this.scrContainer.addEventListener('scroll', function(e){
   if(this.isTouchScreenBtm(e)){
     this.loadMore();
@@ -57,7 +57,7 @@ watch: {
 }
 },
 methods: {
-    getMovieDetail(id){
+    getZixunDetail(id){
       this.$router.push({ name: 'zixun-detail', params: { id: id }})
   },
   isTouchScreenBtm: function(e){

@@ -1,5 +1,5 @@
 <template>
-	<div id="movie">
+	<div id="zixun">
 		<backToTop @clickBack="backToTop"></backToTop>
 		<md-theme md-name="whiteForm">
 			<md-tabs md-fixed :class="{'wrap-fixed': isScrollDown}">
