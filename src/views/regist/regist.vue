@@ -88,7 +88,7 @@ export default {
 		  		this.registing = false;
 		  		this.doneRegist();
 		  		setTimeout(function(){
-			    	this.$router.push({name:'movie'})
+			    	this.$router.push({name:'entry'})
 			    }.bind(this),600)
 		  	}.bind(this), (function (error) {
 		  		if(error.code = '202'){

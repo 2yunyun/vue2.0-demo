@@ -33,7 +33,7 @@ Vue.material.registerTheme('whiteForm', {
   primary: 'white',
   accent: 'red',
   warn: 'red',
-  background: 'red'
+  background: 'white'
 })
 
 /*老版本vue-touch不兼容2.0，会报错 Cannot read property 'priority' of undefined，请使用vue-touch@next版本*/

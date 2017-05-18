@@ -38,20 +38,35 @@ const router = new VueRouter({
     ]
   },
   {
-    name: '登录', path:'/login',component: require('../views/login/login.vue')
+    name: 'login', path:'/login',component: require('../views/login/login.vue')
   },  
   {
-    name: '注册', path:'/regist',component: require('../views/regist/regist.vue')
+    name: 'regist', path:'/regist',component: require('../views/regist/regist.vue')
   },
   {
     path: '/home/zixun/zixun',
-    name: '资讯中心',
+    name: '资讯',
     component: require('../components/zixun/zixun.vue'),
   },
   {
     path: '/home/zixun/detail/:id',
     name: 'zixun-detail',
     component: require('../components/zixun/zixun_detail.vue'),
+  },
+  {
+    path: '/home/live/live',
+    name: '直播',
+    component: require('../components/live/live.vue'),
+  },
+  {
+    path: '/home/oneDayASingle/oneDayASingle',
+    name: '每日一单',
+    component: require('../components/oneDayASingle/oneDayASingle.vue'),
+  },
+{
+    path: '/home/oneDayASingle/oneDayASingle',
+    name: '资料库',
+    component: require('../components/oneDayASingle/oneDayASingle.vue'),
   },
   {
     path: '/home/lottery/list/:listId',

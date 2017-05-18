@@ -11,14 +11,15 @@ const store = new Vuex.Store({
 	getters: {
 		[types.THEME](state){
 			var mapTheme = {
-	  			"zixun": 'default',
+	  			"entry": 'default',
+	  			"资讯": 'default',
 	  			'zixun-detail': 'default',
-	  			"lottery": 'default',
+	  			"开奖": 'default',
 	  			"music-list": 'default',
 	  			"music-play": 'default',
-	  			"sendeveryday": 'default',
-	  			'buytogether': 'default',
-	  			'mine': 'default',
+	  			"天天送": 'default',
+	  			'合买': 'default',
+	  			'我的': 'default',
 	  			'photo-detail': 'default'
 	  		}
 			return mapTheme[state.activeRoute]
