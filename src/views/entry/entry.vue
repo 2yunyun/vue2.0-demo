@@ -28,7 +28,7 @@
 		<md-layout class="shownews" md-gutter>
 			<div class="scroll-wrap">
 				<ul class="scroll-content" :style="{ top }">
-					<li v-for="item in prizeList">{{item.name}}</li >  
+					<li v-for="item in scrollnewsList">{{item.name}}</li >  
 					</ul>
 				</div>
 			</md-layout>
@@ -89,7 +89,7 @@
 						bg:require("../../../statics/img/entry/subnav.jpg")
 					}
 					],
-					prizeList: [
+					scrollnewsList: [
 					{ name: '[竞彩足球] 有运中123元' },
 					{ name: '[足彩] 压哨中13743元' },
 					{ name: '[竞彩篮球] 有运中466元' },
@@ -213,7 +213,7 @@
 
 			//滚动新闻
 			setInterval(_ => {
-				if(this.activeIndex < this.prizeList.length) {
+				if(this.activeIndex < this.scrollnewsList.length) {
 					this.activeIndex += 1;
 				} else {
 					this.activeIndex = 0;
@@ -255,7 +255,6 @@
 	.card-entry-swiper{
 
 		.swiper-container {
-			height: 200px;
 			width: 100%;
 
 			.swiper-slide {

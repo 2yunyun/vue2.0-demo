@@ -1,17 +1,17 @@
 <template>
 	<div id="navbar">
 		<md-theme :md-name="whiteForm">
-			<transition name="slideT">
-				<md-toolbar class="top-nav" v-if="activeNav">
+			<!-- <transition name="slideT">
+				<md-toolbar class="top-nav" v-if="activeNav"> -->
 					<!-- <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
 						<md-icon><i class="iconfont icon-menu"></i></md-icon>
 					</md-button> -->
-					<h2 class="md-title" style="flex: 1" v-text="activeRoute"></h2>
+					<!-- <h2 class="md-title" style="flex: 1" v-text="activeRoute"></h2> -->
 					<!-- <md-button class="md-icon-button">
 						<md-icon @click.native="logout"><i class="iconfont icon-logout"></i></md-icon>
 					</md-button> -->
-				</md-toolbar>
-			</transition>
+			<!-- 	</md-toolbar>
+		</transition> -->
 			<transition name="slideD">		
 				<md-bottom-bar md-shift class="btm-nav">
 					<md-bottom-bar-item @click.native="doAction(0)" :class="{'md-active': isActive[0]}"><i class="iconfont icon-tubiao- btm-nav-icon"></i>首页</md-bottom-bar-item>

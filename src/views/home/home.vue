@@ -2,7 +2,7 @@
 	<div id="home">
 		<!-- <audio :src="audioSrc" id="audio"></audio> -->
 		<md-theme :md-name="whiteForm">
-			<navBar @toggleLeftSidenav="toggleLeftSidenav"></navBar>
+			<navBar></navBar>
 			
 			<keep-alive>
 				<router-view></router-view>
