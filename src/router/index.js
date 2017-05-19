@@ -69,9 +69,9 @@ const router = new VueRouter({
     component: require('../components/oneDayASingle/oneDayASingle.vue'),
   },
   {
-    path: '/home/lottery/list/:listId',
-    name: 'music-list',
-    component: require('../components/lottery/music_list.vue'),
+    path: '/home/lottery/list/:titleKey',
+    name: 'lottery-list',
+    component: require('../components/lottery/lottery_list.vue'),
   },
   {
     path: '/home/lottery/list/:listId/song/:songId',

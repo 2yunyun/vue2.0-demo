@@ -38,14 +38,12 @@
 	
 </template>
 <script>
-import Search from "./search_music.vue"
 import BackToTop from "../common/backToTop.vue"
 import axios from "axios"
 import Store from "../../assets/js/storage.js"
 import HeaderBack from "../common/header_back.vue"
 export default {
   components: {
-  	search: Search,
   	backToTop: BackToTop,
   	headerBack: HeaderBack
   },

@@ -9,7 +9,7 @@
 						<span>第<span>2017056</span>期</span>
 						<span>日期：2017-05-06</span> 
 					</div>
-					<md-button class="md-icon-button md-list-action">
+					<md-button class="md-icon-button md-list-action" @click='showList("ssq")'>
 						<md-icon class="resetColor">&gt;</md-icon>
 					</md-button>
 
@@ -52,7 +52,7 @@
 						<span>第<span>17073</span>期</span>
 						<span>日期：2017-05-16</span> 
 					</div>
-					<md-button class="md-icon-button md-list-action">
+					<md-button class="md-icon-button md-list-action" @click='showList("jqc")'>
 						<md-icon class="resetColor">&gt;</md-icon>
 					</md-button>
 
@@ -89,7 +89,7 @@
 						<span>&nbsp;</span>
 						<span>日期：2017-05-16</span>
 					</div>
-					<md-button class="md-icon-button md-list-action">
+					<md-button class="md-icon-button md-list-action" @click='showList("jczq")'>
 						<md-icon class="resetColor">&gt;</md-icon>
 					</md-button>
 
@@ -120,7 +120,7 @@
 							<span>第<span>170519017</span>期</span>
 							<span>日期：2017-05-16</span>
 						</div>
-						<md-button class="md-icon-button md-list-action">
+						<md-button class="md-icon-button md-list-action" @click='showList("jxks")'>
 							<md-icon class="resetColor">&gt;</md-icon>
 						</md-button>
 
@@ -155,7 +155,7 @@
 							<span>第<span>170519017</span>期</span>
 							<span>日期：2017-05-16</span>
 						</div>
-						<md-button class="md-icon-button md-list-action">
+						<md-button class="md-icon-button md-list-action" @click='showList("gxks")'>
 							<md-icon class="resetColor">&gt;</md-icon>
 						</md-button>
 
@@ -218,7 +218,7 @@
 			},
 			data() {
 				return {
-					title:'开奖',
+					title:'开奖公告',
 					prizeList: [
 					{ name: '[竞彩足球] 有运中123元' },
 					{ name: '[足彩] 压哨中13743元' },
@@ -254,9 +254,9 @@
 			},
 			methods: {
 			//开奖公告列表
-			showList(id){
-				this.$router.push({ name: 'music-list', params: { 
-					listId: id}
+			showList(key){
+				this.$router.push({ name: 'lottery-list', params: { 
+					titleKey: key}
 				})
 
     	// 存储当前列表id到本地
