@@ -16,7 +16,7 @@ const store = new Vuex.Store({
 	  			'zixun-detail': 'default',
 	  			"开奖": 'default',
 	  			"lottery-list": 'default',
-	  			"music-play": 'default',
+	  			"lottery-detail": 'default',
 	  			"天天送": 'default',
 	  			'合买': 'default',
 	  			'我的': 'default',

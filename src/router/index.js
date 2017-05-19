@@ -74,9 +74,9 @@ const router = new VueRouter({
     component: require('../components/lottery/lottery_list.vue'),
   },
   {
-    path: '/home/lottery/list/:listId/song/:songId',
-    name: 'music-play',
-    component: require('../components/lottery/music_play.vue'),
+    path: '/home/lottery/list/:titleKey/detail/:listId',
+    name: 'lottery-detail',
+    component: require('../components/lottery/lottery-detail.vue'),
   },
   {
     path: '/home/buytogether/detail/:id',

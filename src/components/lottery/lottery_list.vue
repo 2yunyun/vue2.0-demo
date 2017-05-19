@@ -10,7 +10,7 @@
           <span>&nbsp;</span>
           <span>日期：2017-05-16</span>
         </div>
-        <md-button class="md-icon-button md-list-action">
+        <md-button class="md-icon-button md-list-action" @click="showDetails(1)">
           <md-icon class="resetColor">&gt;</md-icon>
         </md-button>
 
@@ -44,7 +44,6 @@
      return {
       titleKey: this.$route.params.titleKey,
       flag: true,
-      searchList:[],
       spinnerFlag: false
     };
   },
@@ -95,9 +94,16 @@ methods: {
   showList: function(){
    this.flag = true
  },
- backToTop(){
-   document.body.scrollTop = 0;
- }
+ showDetails:function(id){
+
+  //this.$router.push({ name: 'lottery-detail'});
+  this.$router.push({ name: 'lottery-detail', params: { 
+    listId: id}
+  })
+},
+backToTop(){
+ document.body.scrollTop = 0;
+}
 }
 }
 </script>
@@ -108,16 +114,27 @@ methods: {
 		padding: 64px 0 0 0;
 		text-align: center;
 	} 
-	.progress{
-		position: absolute;
-		height: 2px;
-		left:0;
-		bottom:0px;
-		background-color: rgba(0,128,128,.5)
-	}
-	.active{
-		background-color: rgba(218, 218, 218, 0.57);
-	}
+
+  .lotteryList .md-list-text-container{
+    -ms-flex-flow: row nowrap;
+    flex-flow: row;
+    align-content: space-between;
+    justify-content: space-around;
+    overflow: visible;
+    line-height:48px;
+  }
+
+
+  .progress{
+    position: absolute;
+    height: 2px;
+    left:0;
+    bottom:0px;
+    background-color: rgba(0,128,128,.5)
+  }
+  .active{
+    background-color: rgba(218, 218, 218, 0.57);
+  }
 </style>
 
 
