@@ -332,7 +332,7 @@
 
 
 
-	.menuList{
+	.md-list.menuList{
 		flex-direction: row;
 		flex-wrap: wrap;
 		align-content: space-between;
@@ -341,11 +341,5 @@
 			width:49%;
 		}
 	}
-
-	.md-list-text-container>:nth-child(2), .md-list-text-container>:nth-child(3){
-		font-size:13px;
-	}
-
-
 	
 </style>

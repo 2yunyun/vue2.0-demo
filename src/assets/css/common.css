@@ -9,7 +9,7 @@ html,body{
 	margin-top: 10px;
 }
 /* 主题 */
-/* .md-theme-blue{
+.md-theme-blue{
 	background-color: #2196f3
 }
 .md-theme-teal{
@@ -21,4 +21,7 @@ html,body{
 .md-theme-indigo{
 	background-color: #3f51b5
 }
- */
+
+.md-theme-whiteForm{
+	background-color: #fff;
+}

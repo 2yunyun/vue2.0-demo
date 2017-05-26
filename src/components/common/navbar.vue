@@ -1,24 +1,13 @@
 <template>
 	<div id="navbar">
-		<md-theme :md-name="whiteForm">
-			<!-- <transition name="slideT">
-				<md-toolbar class="top-nav" v-if="activeNav"> -->
-					<!-- <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
-						<md-icon><i class="iconfont icon-menu"></i></md-icon>
-					</md-button> -->
-					<!-- <h2 class="md-title" style="flex: 1" v-text="activeRoute"></h2> -->
-					<!-- <md-button class="md-icon-button">
-						<md-icon @click.native="logout"><i class="iconfont icon-logout"></i></md-icon>
-					</md-button> -->
-			<!-- 	</md-toolbar>
-		</transition> -->
+		<md-theme :md-name="theme">
 			<transition name="slideD">		
 				<md-bottom-bar md-shift class="btm-nav">
-					<md-bottom-bar-item @click.native="doAction(0)" :class="{'md-active': isActive[0]}"><i class="iconfont icon-tubiao- btm-nav-icon"></i>首页</md-bottom-bar-item>
-					<md-bottom-bar-item @click.native="doAction(1)" :class="{'md-active': isActive[1]}"><i class="iconfont icon-music btm-nav-icon"></i>开奖</md-bottom-bar-item>
-					<md-bottom-bar-item @click.native="doAction(2)" :class="{'md-active': isActive[2]}"><i class="iconfont icon-book btm-nav-icon"></i>天天送</md-bottom-bar-item>
-					<md-bottom-bar-item @click.native="doAction(3)" :class="{'md-active': isActive[3]}"><i class="iconfont icon-photo btm-nav-icon"></i>合买</md-bottom-bar-item>
-					<md-bottom-bar-item @click.native="doAction(4)" :class="{'md-active': isActive[4]}"><i class="iconfont icon-photo btm-nav-icon"></i>我的</md-bottom-bar-item>
+					<md-bottom-bar-item @click.native="doAction(0)" :class="{'md-active': isActive[0]}"><i class="iconfont icon-shouye btm-nav-icon"></i>首页</md-bottom-bar-item>
+					<md-bottom-bar-item @click.native="doAction(1)" :class="{'md-active': isActive[1]}"><i class="iconfont icon-kjgg btm-nav-icon"></i>开奖</md-bottom-bar-item>
+					<md-bottom-bar-item @click.native="doAction(2)" :class="{'md-active': isActive[2]}"><i class="iconfont icon-gendan btm-nav-icon"></i>跟单</md-bottom-bar-item>
+					<md-bottom-bar-item @click.native="doAction(3)" :class="{'md-active': isActive[3]}"><i class="iconfont icon-hemai btm-nav-icon"></i>合买</md-bottom-bar-item>
+					<md-bottom-bar-item @click.native="doAction(4)" :class="{'md-active': isActive[4]}"><i class="iconfont icon-mine btm-nav-icon"></i>我的</md-bottom-bar-item>
 				</md-bottom-bar>
 			</transition>
 
@@ -29,7 +18,9 @@
 
 <script>
 	import Util from "../../util/util"
-	import AV from "../../assets/js/av"
+
+	import Store from "../../assets/js/storage.js"
+
 	export default {
 		mounted: function(){
 			var scrT = document.body.scrollTop || window.scrollY;
@@ -56,6 +47,8 @@
 				return this.$store.getters.THEME_COLOR
 			},
 			activeRoute(){
+				console.log('activeRoute:  '+this.$store.state.activeRoute);
+
 				return this.$store.state.activeRoute;
 			}
 		},
@@ -66,7 +59,7 @@
 		},
 		methods: {
 			logout(){
-				AV.User.logOut();
+				Store.remove('username')
 				this.$router.push({name:'login'});
 			},
 			doAction(index) {
@@ -83,13 +76,13 @@
 					this.$router.push({name:'开奖'});
 					break;
 					case 2:
-					this.$router.push({name:'天天送'});
+					this.$router.push({name:'跟单'});
 					break;
 					case 3:
 					this.$router.push({name:'合买'});
 					break;
 					case 4:
-					this.$router.push({name:'我的'});
+					this.checkLogin();
 					break;
 				}
 			},
@@ -98,16 +91,24 @@
 				var mapRoute = {
 					"entry": 0,
 					"开奖": 1,
-					"天天送":  2,
+					"跟单": 2,
 					'合买': 3,
 					'我的': 4
 				}
 				this.isActive = [false,false,false,false];
 				this.isActive[mapRoute[this.activeRoute]] = true;
 			},
-			toggleLeftSidenav() {
-				this.$emit("toggleLeftSidenav");
-			},
+			checkLogin(){
+				if(Store.get('username')){
+					console.log("处于登录状态");
+					//检查是否登录，存储并跳转至目标路径
+					this.$router.push({name:'我的'});
+				}else{
+					Store.set('to','我的');
+					this.$router.push({name:'login'});
+				}
+			}
+			
 		}
 	}
 </script>
@@ -122,8 +123,7 @@
 
 	}
 	.md-theme-default.md-toolbar{
-		background:red;
-		color:#fff;
+		color:#fff; 
 	}
 	.md-bottom-bar{
 		position: fixed;
@@ -161,6 +161,25 @@
 	.md-theme-default.md-bottom-bar.md-shift .md-bottom-bar-item.md-active{
 		color:red;
 	}
+
+	nav.md-whiteframe.md-tabs-navigation.md-whiteframe-0dp.md-has-label.md-fixed.md-centered{
+		background-color: rgba(255, 255, 255, 0) ;		
+	}
+
+	.md-theme-default.md-tabs#logIntabs>.md-tabs-navigation .md-tab-header{
+		color: rgba(0, 0, 0, 0.74);
+	}
+
+	.md-theme-default.md-tabs#logIntabs>.md-tabs-navigation .md-tab-header.md-active{
+		color:rgba(244, 67, 54, 1);
+	}
+
+	.md-theme-whiteForm.md-input-container.md-input-focused input,
+	.md-theme-default.md-input-container.md-input-focused input,
+	.md-theme-default.md-input-container.md-input-focused label{
+		color: rgba(0,0,0,.87);
+	}
+
 </style>
 
 

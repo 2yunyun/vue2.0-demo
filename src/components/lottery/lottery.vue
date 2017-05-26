@@ -1,6 +1,5 @@
 <template>
 	<div id="lottery">
-		<md-theme :md-name="theme">
 			<headerBack :title="title"></headerBack>
 			<md-list class="custom-list md-double-line lotteryList">
 				<md-list-item>
@@ -200,10 +199,6 @@
 					</md-list-item>
 
 				</md-list>
-
-
-
-			</md-theme>
 		</div>
 
 	</template>
@@ -229,7 +224,7 @@
 					activeIndex: 0,
 				};
 			},
-			computed:{
+			computed:{				
 				top() {
 					return - this.activeIndex * 30 + 'px';
 				}

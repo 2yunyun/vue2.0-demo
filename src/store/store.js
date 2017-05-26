@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from "./types.js"
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -11,17 +12,24 @@ const store = new Vuex.Store({
 	getters: {
 		[types.THEME](state){
 			var mapTheme = {
-	  			"entry": 'default',
-	  			"资讯": 'default',
-	  			'zixun-detail': 'default',
-	  			"开奖": 'default',
-	  			"lottery-list": 'default',
-	  			"lottery-detail": 'default',
-	  			"天天送": 'default',
-	  			'合买': 'default',
-	  			'我的': 'default',
-	  			'photo-detail': 'default'
-	  		}
+				'entry': 'default',
+				'资讯': 'default',
+				'zixun-detail': 'default',
+				'开奖': 'default',
+				'lottery':'default',
+				'lottery-list': 'default',
+				'lottery-detail': 'default',
+				'跟单':'default',
+				'合买': 'default',
+				'我的': 'default',
+				'我的定制': 'default',
+				'photo-detail': 'default',
+				'login': 'default',
+				'unameLogin': 'default',
+				'mobileLogin': 'default',
+				'regist': 'default'
+				
+			}
 			return mapTheme[state.activeRoute]
 		},
 		[types.SPINNERCLASS](state,getters){

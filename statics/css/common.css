@@ -30,7 +30,7 @@ html,body{
 	background-color: #fff;
 }
 .md-toolbar{
-	background-color: #2196f3;
+	/*background-color: #fff;*/
 	color: #fff;
 }
 .md-tabs .md-tab{
@@ -45,8 +45,16 @@ html,body{
     color:blue;
 }
 
+.md-list-text-container>:nth-child(1){
+    font-size: 1.35rem;
+}
 
-
+.md-list-text-container>:nth-child(2), .md-list-text-container>:nth-child(3){
+    font-size: 1.1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
 
 
 /* 图标 */

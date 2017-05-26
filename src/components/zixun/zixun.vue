@@ -1,7 +1,8 @@
 <template>
 	<div id="zixun">
+		<headerBack :title="title"></headerBack>
 		<backToTop @clickBack="backToTop"></backToTop>
-		<md-theme md-name="whiteForm">
+		<md-theme md-name="theme">
 			<md-tabs md-fixed :class="{'wrap-fixed': isScrollDown}">
 				<md-tab md-label="竞技彩"><jingjicai></jingjicai></md-tab>
 				<md-tab md-label="双色球"><shuangseqiu></shuangseqiu></md-tab>
@@ -20,11 +21,19 @@
 	import zucai from "./zucai.vue"
 	import fucai from "./fucai.vue"
 	import backToTop from "../common/backToTop.vue"
+	import headerBack from "../common/header_back.vue"
+
 	export default {
 		data() {
 			return {
+				title:'资讯中心',
 				isScrollDown: false
 			};
+		},
+		computed:{
+			theme(){
+				return this.$store.getters.THEME_COLOR
+			},
 		},
 		mounted: function(){
 
@@ -43,7 +52,8 @@
 			shuangseqiu,
 			zucai,
 			fucai,
-			backToTop
+			backToTop,
+			headerBack
 		}
 	}
 </script>
@@ -65,6 +75,17 @@
 		top: 0;
 		width: 100%;
 	}
+	.md-theme-default.md-tabs>.md-tabs-navigation .md-tab-header.md-active {
+		color: #f44336;
+		border-bottom-color: rgb(244, 67, 54);
+	}
+
+	.md-tabs .md-tabs-navigation.md-fixed .md-tab-header.md-active{
+		color: #f44336;
+		border-bottom:2px solid rgb(244, 67, 54);
+	}
+
+	
 
 </style>
 
