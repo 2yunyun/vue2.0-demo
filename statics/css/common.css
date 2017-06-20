@@ -18,7 +18,7 @@ html,body{
 
 /* Vue-material 组件 */
 .md-spinner{
-	margin: 10px auto 0;
+	margin: .1rem auto 0;
 }
 .md-dialog-container.md-active .md-dialog{
 	background: #fff;
@@ -30,7 +30,7 @@ html,body{
 	background-color: #fff;
 }
 .md-toolbar{
-	/*background-color: #fff;*/
+	background-color: #eb1c42;
 	color: #fff;
 }
 .md-tabs .md-tab{
@@ -46,11 +46,11 @@ html,body{
 }
 
 .md-list-text-container>:nth-child(1){
-    font-size: 1.35rem;
+    font-size: .28rem;
 }
 
 .md-list-text-container>:nth-child(2), .md-list-text-container>:nth-child(3){
-    font-size: 1.1rem;
+    font-size: .24rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -59,10 +59,10 @@ html,body{
 
 /* 图标 */
 .iconfont{
-	width: 24px;
-    min-width: 24px;
-    height: 24px;
-    min-height: 24px;
+	width: .24rem;
+    min-width: .24rem;
+    height: .24rem;
+    min-height: .24rem;
     margin: auto;
     display: -ms-inline-flexbox;
     display: inline-flex;
@@ -72,5 +72,5 @@ html,body{
     margin: 0 auto;
     fill: currentColor;
     vertical-align: middle;
-    font-size: 18px;
+    font-size: .28rem;
 }

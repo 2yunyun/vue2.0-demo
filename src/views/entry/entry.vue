@@ -35,7 +35,7 @@
 
 			<md-list class="custom-menu-list md-triple-line menuList">
 				<md-list-item v-for="item in menuList">
-					<md-avatar>
+					<md-avatar class="item-img">
 						<img :src="item.bg">
 					</md-avatar>
 					<div class="md-list-text-container">
@@ -204,13 +204,6 @@
 				}
 			},
 			mounted() {
-				console.log('app init');
-
-			//暂未做头部显示的配置，暂时手动移除navbar
-			var el = $('#navbar')[0].childNodes;
-			//el[0].removeChild(el[0].childNodes[0]);
-			el[0].childNodes[0].style.visible='hidden';
-
 			//滚动新闻
 			setInterval(_ => {
 				if(this.activeIndex < this.scrollnewsList.length) {
@@ -226,7 +219,7 @@
 		},		
 		computed: {
 			top() {
-				return - this.activeIndex * 30 + 'px';
+				return - this.activeIndex * 0.5 + 'rem';
 			}
 		},
 		methods: {
@@ -249,7 +242,7 @@
 <style lang="scss">
 
 	#entry{
-		padding:0 0 56px;
+		padding:0 0 .98rem;
 	}
 
 	.card-entry-swiper{
@@ -259,8 +252,6 @@
 
 			.swiper-slide {
 				text-align: center;
-				font-size: 38px;
-				font-weight: 700;
 				background-color: #eee;
 				display: -ms-flexbox;
 				display: flex;
@@ -279,9 +270,9 @@
 
 	.md-layout{
 		margin: 0 auto;
-		padding: 10px 0;
+		padding: .2rem 0;
 		text-align:center;
-		&.layout-wrap{			
+		&.layout-wrap{
 			height: 100%;	
 		}
 	}
@@ -289,33 +280,36 @@
 	.album-img{
 		width: 100%;
 		max-height: 100%;
-		margin-bottom: 10px;
+		margin-bottom: .1rem;
 	}
 
 	.album-name{
 		width: 100%;
 		text-align:center;
+		font-size: .28rem;
 	}
 
 	/*news*/
 
 	.showOrder{
 		width:100%;
-		height: 50px;
-		padding:0 10px;
+		height: .5rem;
+		padding:0 .1rem;
+		margin-bottom:.25rem;
 	}
 
 	.shownews{
 		width:100%;
-		height: 30px;
-		padding:0 10px;
+		height: .5rem;
+		padding:0 .1rem;
 		border-top: .4px solid #dedede;
 		border-bottom: .4px solid #dedede;
+		margin-bottom:.25rem;
 	}
 
 	.scroll-wrap{
 		width:100%;
-		height: 30px;
+		height: .5rem;
 		overflow: hidden;
 	}
 
@@ -324,8 +318,9 @@
 		transition: top .2s;
 
 		li{
-			line-height: 30px;
+			line-height: .5rem;
 			text-align: left;
+			font-size:.28rem;
 		}
 	}
 
@@ -339,6 +334,13 @@
 		justify-content:space-between;
 		.md-list-item{
 			width:49%;
+			height: 1.5rem;
+			line-height: 1.5rem;
+		}
+
+		.item-img{
+			width:1rem;
+			height: 1rem;
 		}
 	}
 	

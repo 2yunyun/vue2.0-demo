@@ -56,6 +56,21 @@ const router = new VueRouter({
         component: require('../components/mine/myCustomization.vue')
     },
     {
+        path: '/home/mine/allOrderList',
+        name: '全部订单',
+        component: require('../components/mine/allOrderList.vue')
+    },
+    {
+        path: '/home/mine/winningOrderList',
+        name: '开奖订单',
+        component: require('../components/mine/winningOrderList.vue')
+    },
+    {
+        path: '/home/mine/outstandingOrder',
+        name: '未开奖订单',
+        component: require('../components/mine/outstandingOrder.vue')
+    },
+    {
         path: '/home/zixun/zixun',
         name: '资讯',
         component: require('../components/zixun/zixun.vue'),

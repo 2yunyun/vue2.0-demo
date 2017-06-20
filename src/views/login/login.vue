@@ -3,8 +3,8 @@
 		<md-theme :md-name="theme">		
 			<headerBack :title="title"></headerBack>
 			<md-tabs md-fixed id="logIntabs">
-				<md-tab md-label="手机号快捷登录"><mobileLogin></mobileLogin></md-tab>
-				<md-tab md-label="账号密码登录"><unameLogin></unameLogin></md-tab>					
+				<md-tab md-label="验证码登录/注册"><mobileLogin></mobileLogin></md-tab>
+				<md-tab md-label="账号密码登录"><unameLogin></unameLogin></md-tab>
 			</md-tabs>			
 		</md-theme>
 	</div>
@@ -48,11 +48,13 @@
 		height: 100%;
 		overflow: hidden;
 		display: flex;
-		justify-content: center;
-		align-items: center;
-		background: rgba(255, 255, 255, 0.5);
-		background: url('./img/login_bg.jpg') no-repeat center center; 
-		background-size: cover;
+		background:#fff;
+		padding-top:.88rem;
+		.md-theme{
+			display: block;
+			overflow: hidden;
+			width: 100%;
+		}
 	}
 
 	.md-theme-whiteForm.md-input-container.md-input-focused input{
@@ -61,7 +63,7 @@
 	}
 
 	.md-input-container.md-input-required label:after{
-		color:#f44336;
+		color:#eb1c42;
 	}
 
 	.md-input{

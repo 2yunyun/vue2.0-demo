@@ -1,7 +1,7 @@
 <template>
 	<div id="zixun">
 		<headerBack :title="title"></headerBack>
-		<backToTop @clickBack="backToTop"></backToTop>
+		<!-- <backToTop @clickBack="backToTop"></backToTop> -->
 		<md-theme md-name="theme">
 			<md-tabs md-fixed :class="{'wrap-fixed': isScrollDown}">
 				<md-tab md-label="竞技彩"><jingjicai></jingjicai></md-tab>
@@ -58,17 +58,12 @@
 	}
 </script>
 <style lang="scss">
-	#movie{
+	#zixun{
 		min-height: 100vh;
 		box-sizing: border-box;
-		padding: 64px 0;
+		padding-top: .88rem;
 	}
-	.md-tabs{
-		position: fixed;
-		width:100%;
-		top: 64px;
-		left:0;
-	}
+
 	.md-tabs.wrap-fixed>.md-tabs-navigation{
 		position: fixed;
 		left:0;
@@ -76,13 +71,13 @@
 		width: 100%;
 	}
 	.md-theme-default.md-tabs>.md-tabs-navigation .md-tab-header.md-active {
-		color: #f44336;
-		border-bottom-color: rgb(244, 67, 54);
+		color: #eb1c42;
+		border-bottom-color:.04rem solid #eb1c42;
 	}
 
 	.md-tabs .md-tabs-navigation.md-fixed .md-tab-header.md-active{
-		color: #f44336;
-		border-bottom:2px solid rgb(244, 67, 54);
+		color: #eb1c42;
+		border-bottom:.04rem solid #eb1c42;
 	}
 
 	

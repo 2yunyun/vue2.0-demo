@@ -55,10 +55,10 @@
 </script>
 <style lang="scss" scoped>
 	.card-zixun-detail {
-		margin-top: 72px;
+		margin-top: .72rem;
 		.md-subhead {
 			.md-icon {
-				$size: 16px;
+				$size: .16rem;
 
 				width: $size;
 				min-width: $size;
@@ -74,18 +74,18 @@
 		}
 
 		.card-reservation {
-			margin-top: 8px;
+			margin-top: .08rem;
 			display: flex;
 			align-items: center;
 			justify-content: space-around;
 
 			.md-icon {
-				margin: 8px;
+				margin:.08rem;
 				color: rgba(#000, .54) !important;
 			}
 
 			.md-button {
-				border-radius: 2px !important;
+				border-radius: .02rem !important;
 			}
 		}
 
@@ -95,6 +95,6 @@
 		}
 	}
 	.md-spinner{
-		margin-top: 72px;
+		margin-top: .72rem;
 	}
 </style>
