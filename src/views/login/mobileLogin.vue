@@ -120,8 +120,15 @@
 								//存储用户信息
 								if(response.errorcode== 0 && response.msg=='成功'){							
 									Store.set('username',response.data.username);
-									that.$router.push({name:Store.get('to')});
-									Store.remove('to');
+									Store.set('accessToken',response.data.accessToken);
+									Store.set('userno',response.data.userno);
+									Store.set('balance',response.data.balance);//余额
+									Store.set('drawbalance',response.data.drawbalance);//可提现余额
+									Store.set('gold',response.data.gold);//金币
+									
+									//that.$router.push({name:Store.get('to')});
+									that.$router.push({name:'我的'});
+									//Store.remove('to');
 								}else{
 									that.visible=true;
 									$('.hsy-dialog .body').html(response.msg);

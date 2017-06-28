@@ -19,9 +19,9 @@
 								<md-avatar class="people-header">
 									<img src="//placeimg.com/40/40/people/1" alt="People">
 								</md-avatar>
-								<div class="md-title">用户名</div>
+								<div class="md-title uname">用户名</div>
 							</div>
-							<div class="md-subhead"><img src="statics/img/mine/setting@2x.png" alt="设置"></div>
+							<div class="md-subhead"><img class="setBtn" @click="logout()" src="statics/img/mine/setting@2x.png" alt="设置"></div>
 						</md-card-header>
 
 						<md-card-actions>
@@ -67,6 +67,7 @@
 
 
 <script>
+	import Util from "../../util/util"
 	import $ from "n-zepto"
 	import Store from "../../assets/js/storage.js"
 	import allOrderList from "./allOrderList.vue"
@@ -78,13 +79,31 @@
 			return {
 				title:'我的',
 				isScrollDown: false
-
 			}
 		},
 		mounted() {
-			// $('.md-tabs.mine-tabs').delegate('.md-tab-header:first-child','click',function(){
-			// 	console.log('全部订单');
-			// });
+
+			this.checkLogin();
+
+			var that = this;
+			$('.gotoLogin').css('margin-left','.2rem');
+			$('.uname.unLogin').on('click',function(){
+				Store.set('to','我的');
+				that.$router.push({name:'login'});
+			});
+
+			
+
+			$('.md-tabs.mine-tabs').delegate('.md-tab-header:first-child.md-active','click',function(){
+				if($('.allOrderList-menu').css("display") == "none"){
+					$('.allOrderList-menu').show();
+					$('.md-tab-header:first-child.md-active').css('background-image','url(statics/img/mine/xuanxiangtiao@2x.png)');
+				}else{
+					$('.allOrderList-menu').hide();
+					$('.md-tab-header:first-child.md-active').css('background-image','url(statics/img/mine/xuanxiangtiao_down@2x.png)');
+				}
+				
+			});
 		},
 		create() {
 			
@@ -98,16 +117,112 @@
 			allOrderList,
 			winningOrderList,
 			outstandingOrder
+		},
+		methods:{
+			logout(){
+				var that = this;
+				$.ajax({
+					url:AJAXURL,
+					type: "post",
+					jsonp: "callbackfun",
+					jsonpCallback:'callback',
+					dataType: "jsonp",
+					data: {
+						command:'logout',							
+						authToken:Store.get('accessToken'),
+						jscallback:'callback',
+						agentId:'agent_wap'
+					},
+					success: function(response) {
+
+						console.log(response.data);
+						Store.remove('username');
+						Store.remove('accessToken');
+						that.$router.push({name:'login'});
+
+					},
+					error: function(response) {
+						console.log(JSON.stringify(response));
+					}
+
+				});
+
+
+				
+			},
+			checkLogin(){
+				if(!Store.get('username')){
+
+					$('.md-card-actions').eq(0).css('visibility', 'hidden')
+					$('.uname').html('登录/注册'+'<img class="gotoLogin" src="statics/img/mine/white--you-JT@2x.png" alt=">">').addClass('unLogin');
+
+				}else{
+
+					$('.people-header img').attr('src',Store.get('photoUrl'));
+					if( Store.get('balance')){
+						$('.md-card-actions').eq(0).find('.v_balance').html(Store.get('balance'));
+						
+					}
+
+					$.ajax({
+						url:AJAXURL,
+						type: "post",
+						jsonp: "callbackfun",
+						jsonpCallback:'callback',
+						dataType: "jsonp",
+						data: {
+							command:'findUserAccount',
+							authToken:Store.get('accessToken'),
+							jscallback:'callback',
+							agentId:'agent_wap'
+						},
+						success: function(response) {
+
+							for(var key in response.data){  
+
+								Store.set(key,response.data[key]);
+
+							}
+
+							$('.md-card-actions').eq(0).find('.v_gold').html(response.data.gold);
+							
+
+						},
+						error: function(response) {
+							console.log(JSON.stringify(response));
+						}
+
+					});
+
+					
+					$('.md-card-actions').eq(0).css('visibility','visible');
+
+
+
+					if(!Store.get('alias')){
+						$('.uname').removeClass('unLogin').html(Store.get('username'));
+					}else{
+						$('.uname').removeClass('unLogin').html(Store.get('alias'));
+					}
+
+				}
+			}
+
+
 		}
 	}
+
 </script>
 <style lang="scss" scoped>
 	#mine{
+		padding-bottom: .98rem;
 		.md-layout{
 			padding:0;
 		}
 
 		.md-layout.usercenter{
+
+
 			.md-theme-default.md-card.mine-card{
 				position: relative;
 				.md-card-media-cover.md-solid .md-card-area.mine-card-area{
@@ -147,6 +262,7 @@
 						.card-header-l .md-title{
 							font-size: .32rem;
 							line-height: 1rem;
+							
 						}
 						.md-subhead{
 							line-height: 1rem;
@@ -169,6 +285,7 @@
 							flex-direction:row;
 							align-content:center;
 							justify-content:space-around;
+							font-size:.32rem;
 							.balance_info{
 								margin-right: .3rem;
 							}
@@ -184,11 +301,14 @@
 					}
 
 					.md-card-actions.other_actions{
+						height: .7rem;
+						line-height: .7rem;
 						background: rgba(0, 0, 0, .15);
 						margin-bottom:0;
+
 						img{
 							margin-top: 0;
-							margin-right:.02rem;
+							margin-right:.1rem;
 						}
 					}
 

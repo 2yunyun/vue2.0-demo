@@ -101,12 +101,23 @@
 							agentId:'agent_wap'
 						},
 						success: function(response) {
+							console.log('账户信息 ：  '+JSON.stringify(response.data));
 
 								//存储用户信息
 								if(response.errorcode== 0 && response.msg=='成功'){							
-									Store.set('username',response.data.username);
-									that.$router.push({name:Store.get('to')});
-									Store.remove('to');
+									
+
+									for(var key in response.data){  
+										console.log(key);  
+										Store.set(key,response.data[key]);
+										
+									}
+
+									console.log(Store.length);
+									
+									//that.$router.push({name:Store.get('to')});
+									that.$router.push({name:'我的'});
+									//Store.remove('to');
 								}else{
 									that.visible=true;
 									$('.hsy-dialog .body').html(response.msg);

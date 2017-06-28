@@ -894,7 +894,7 @@
 	background-color:rgba(0,0,0,.12)
 }
 .md-divider.md-inset {
-	margin-left:72px
+	margin-left:0
 }
 .md-icon {
 	width: .48rem;
@@ -2389,6 +2389,20 @@
 			.md-list.md-triple-line .md-list-item .md-list-item-container {
 				min-height:1.5rem
 			}
+
+			.md-list.md-triple-line.allOrderLists .md-list-item .md-list-item-container {
+				min-height:1rem;
+				padding-left:0;
+			}
+			.md-list.md-triple-line.allOrderList-menu .md-list-item .md-list-item-container {
+				min-height:.8rem;
+				text-align: center;
+			}
+
+			.md-list.md-triple-line.allOrderList-menu .md-list-item .md-list-item-container.md-active{
+				background-color: #eb1c42;
+			}
+
 			.md-list.md-triple-line .md-avatar {
 				margin:0
 			}
@@ -2421,6 +2435,11 @@
 				-ms-flex:1;
 				flex:1
 			}
+
+			.allOrderLists .md-list-item .md-list-item-holder{
+				position: relative;
+			}
+
 			.md-list-item .md-list-item-holder>.md-ink-ripple {
 				border-radius:0
 			}
@@ -2429,9 +2448,17 @@
 			}
 			.md-list-item .md-list-item-holder .md-avatar:first-child {
 				margin-right:.16rem;
-				width:.88rem;
-				height: .88rem;
 				border-radius: 0;
+			}
+
+			.allOrderLists .md-list-item .md-list-item-holder .md-avatar:first-child {
+				margin-right:.16rem;
+				width:.8rem;
+				min-height: 1rem;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
 			}
 			.md-list-item .md-list-item-holder .md-list-action {
 				margin:0 -.02rem 0 0
@@ -3342,7 +3369,7 @@
 				border-bottom: .01rem solid #d4d4d4;
 			}
 
-			.md-tabs.mine-tabs .md-tabs-navigation {height:.9rem;}
+			.md-tabs.mine-tabs .md-tabs-navigation {min-height:.6rem; height: .6rem;}
 			.md-tabs .md-tabs-navigation.md-has-icon.md-has-label {
 				min-height:72px
 			}
@@ -3433,17 +3460,26 @@
 			*/
 
 			.md-theme-default.md-tabs.md-accent.mine-tabs>.md-tabs-navigation .md-tab-header.md-active, .md-theme-default.md-tabs.md-accent.mine-tabs>.md-tabs-navigation .md-tab-header:focus{
-				color: #333;
-				font-size: .32rem;
+				color: #000;
+				font-size: .28rem;
+				
 			}
+
 			.md-theme-default.md-tabs.md-accent.mine-tabs>.md-tabs-navigation .md-tab-header{
-				color:#333;
-				font-size: .32rem;
+				color:#000;
+				font-size: .28rem;
 				position: relative;
 			}
 
 			.md-theme-default.md-tabs.md-accent.mine-tabs>.md-tabs-navigation .md-tab-header:first-child{
-				background: url(../img/mine/xuanxiangtiao@2x.png) no-repeat 95% center;
+				/*background: url(../img/mine/xuanxiangtiao@2x.png) no-repeat 95% center;*/
+				background-image:  url(../img/mine/xuanxiangtiao@2x.png);
+				background-repeat: no-repeat;
+				background-position: 95% center;
+			}
+
+			.md-theme-default.md-tabs.md-accent.mine-tabs>.md-tabs-navigation .md-tab-header:first-child.md-active{
+				background-image:  url(../img/mine/xuanxiangtiao_down@2x.png);
 			}
 
 			.md-tabs .md-tab-indicator.md-transition-off {

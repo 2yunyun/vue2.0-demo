@@ -72,12 +72,12 @@
 	}
 	.md-theme-default.md-tabs>.md-tabs-navigation .md-tab-header.md-active {
 		color: #eb1c42;
-		border-bottom-color:.04rem solid #eb1c42;
+		border-bottom-color:.01rem solid #eb1c42;
 	}
 
 	.md-tabs .md-tabs-navigation.md-fixed .md-tab-header.md-active{
 		color: #eb1c42;
-		border-bottom:.04rem solid #eb1c42;
+		border-bottom:.01rem solid #eb1c42;
 	}
 
 	

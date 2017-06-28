@@ -81,7 +81,7 @@ loadMore: function() {
 var start = this.zixunLists.length;
 this.busy = true;
 this.spinnerFlag = true;
-axios.get(API_PROXY+'http://www.dajiang365.com/Mobilezixun/getArtListByCategorySnp.html?lastindex='+this.pageStart+'&perpage=10&category=jingjicai')
+axios.get(API_PROXY+'http://www.dajiang365.com/Mobilezixun/getArtListByCategorySnp.html?lastindex='+start+'&perpage=10&category=jingjicai')
 .then(function(res) {
 
     var _data=eval("("+res.data+")");

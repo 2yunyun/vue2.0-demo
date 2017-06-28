@@ -113,7 +113,7 @@
 						this.$router.push({name:'开奖'});
 						break;
 						case 2:
-						this.checkLogin();
+						this.$router.push({name:'我的'});
 						break;
 					}
 				},
@@ -162,6 +162,7 @@
 		left:0;
 		z-index: 3;
 		.md-bottom-bar-item{
+			max-width:inherit;
 			justify-content:center;
 			padding: 0;
 			padding-right: .12rem;
