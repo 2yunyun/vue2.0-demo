@@ -127,7 +127,7 @@
         this.scrContainer = this.$el;
         this.scrContent = this.$el.querySelector(".ol-content")
         this.eleH = this.scrContent.offsetHeight;
-        this.loadMore();
+        //this.loadMore();
         this.scrContainer.addEventListener('scroll', function(e){
           if(this.isTouchScreenBtm(e)){
              this.loadMore();
@@ -144,7 +144,7 @@
        winningOrderList: function(){
         setTimeout(function(){
          this.eleH = this.scrContent.offsetHeight;
-     }.bind(this),1000)
+     }.bind(this),1000) 
     }
 },
 methods: {
@@ -204,7 +204,7 @@ methods: {
 
     },
     error: function(response) {
-        console.log(JSON.stringify(response));
+        console.log('冷静，看看哪里出错了');
     }
 
 });
@@ -252,12 +252,12 @@ var formatDatefun = function (date) {
 
 //数据重组
 var dataRecombinant = function(data){
-    console.log(data);
+   
     if(data.length == 0)return;
     //新对象、新数组
     var obj = {}, arr = [];
 
-    console.time('test');
+   // console.time('test');
 
     //遍历数据，按日期将数据加入新数组orderList中
     for(var i = 0, len = data.length; i < len ; i++){
@@ -279,9 +279,9 @@ var dataRecombinant = function(data){
     for(var key in obj){
         arr.push(obj[key]);
     }
-    console.timeEnd('test');
+    //console.timeEnd('test');
 
-    console.dir('新数组： '+arr);
+    //console.dir('新数组： '+arr);
 
     return arr;
 }

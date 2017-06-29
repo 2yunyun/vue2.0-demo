@@ -82,6 +82,7 @@
 			}
 		},
 		mounted() {
+			//$('#mine').height(window.innerHeight - 98 + 'px');
 
 			this.checkLogin();
 
@@ -189,7 +190,7 @@
 
 						},
 						error: function(response) {
-							console.log(JSON.stringify(response));
+							console.log('获取账户信息出错了');
 						}
 
 					});
@@ -216,6 +217,8 @@
 <style lang="scss" scoped>
 	#mine{
 		padding-bottom: .98rem;
+		overflow:hidden;
+
 		.md-layout{
 			padding:0;
 		}

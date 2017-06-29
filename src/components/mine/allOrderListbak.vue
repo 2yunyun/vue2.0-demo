@@ -2,9 +2,10 @@
   <div id="allOrderList" class="ol-container">
     <div class="ol-content">
         <md-list class="custom-list md-triple-line allOrderList-menu">
-            <md-list-item v-for="menu in menuList">
-                <div class="md-list-text-container" @click='filter_order()'>
-                    {{menu.name}}
+            <md-list-item v-for="menu in menuList" @click.native='filter_order($event)'>
+                <div class="md-list-text-container">
+                    <span class="order_type_text">{{menu.name}}</span>
+                    <span class="order_type_id">{{menu.id}}</span>
                 </div>
                 <md-divider class="md-inset"></md-divider>
             </md-list-item>
@@ -13,7 +14,7 @@
         <div class="tips">登录后才能查看订单哦~</div>
         <md-list class="custom-list md-triple-line allOrderLists">
 
-            <md-list-item v-for="oderByTime in allOrderList">
+            <md-list-item v-for="oderByTime in allOrderList ">
                 <md-avatar>
                     <p class="month">{{oderByTime.orderTime  | filter_month(value)}}月</p>
                     <p class="date">{{oderByTime.orderTime  | filter_date(value)}}</p>
@@ -43,18 +44,19 @@
                                 </div>
                             </div>
                             <div class="result_prizeAmt_r">
-                               <img class="view_result_prizeAmt" src="statics/img/mine/gray-you-JT@2x.png" alt=">">
-                           </div>
-                       </div>
-                   </div>
-               </div>
+                             <img class="view_result_prizeAmt" src="statics/img/mine/gray-you-JT@2x.png" alt=">">
+                         </div>
+                     </div>
+                 </div>
+             </div>
 
 
-               <md-divider class="md-inset"></md-divider>
-           </md-list-item>
-       </md-list>
+             <md-divider class="md-inset"></md-divider>
+         </md-list-item>
 
-   </div>
+     </md-list>
+
+ </div>
 </div>
 
 </template>
@@ -64,148 +66,163 @@
 
     export default {
         data(){
-           return {
+         return {
             scrContainer: null,
             scrContent: null,
             eleH: 0,
             spinnerFlag: true,
             busy: false,
             allOrderList: [],
+            condition:0,
             menuList: [
             {
-                id:'',
+                id:'0',
                 name: "全部订单"
             },
             {
-                id:'',
+                id:'2',
                 name: "追号订单"
             },
             {
-                id:'',
+                id:'3',
                 name: "合买订单"
             },
             {
-                id:'',
+                id:'6',
                 name: "晒单订单"
             },
             {
-                id:'',
+                id:'7',
                 name: "跟单订单"
             }
             ]
         }
     },
-    computed:{
+    computed: {
 
     },
     filters: {
-        filter_month: function (value) {
 
-            return formatMonth(value);
-        },
-        filter_date: function (value) {
+     filter_month: function (value) {
 
-            return formatDate(value);
-        },
-
-        filterFun: function (value) {
-
-            if(value!= '0'){
-                          return "中"+value.toFixed(2)+'元';
-                    }else{
-                return '';
-            }
-        },
-        filterFun2: function (value) {  
-            if(value!= '已中奖'){
-                          return value;
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_actualValue: function (value) {  
-            if(value!= '' && value!= null && value!= '0'){
-                          return '优惠'+value+'元';
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_addPrizeAmt: function (value) {  
-            if(value!= '' && value!= null && value!= '0'){
-                          return '加奖'+value+'元';
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_gold: function (value) {
-            if(value!= '' && value!= null  && value!= '0'){
-                return '金币'+value+'个';
-                
-            }else{
-                return '';
-            }     
-
-        },
+        return formatMonth(value);
     },
-    mounted:function(){
-        $('.allOrderList-menu,.tips').hide();
-        this.checkLogin();
+    filter_date: function (value) {
 
-        this.scrContainer = this.$el;
-        this.scrContent = this.$el.querySelector(".j-content")
-        this.eleH = this.scrContent.offsetHeight;
-        this.loadMore();
-        this.scrContainer.addEventListener('scroll', function(e){
-          if(this.isTouchScreenBtm(e)){
-           this.loadMore();
-       }
-   }.bind(this))
-
-
+        return formatDate(value);
     },
 
-    created(){
-        $('.result_prizeAmt').find(':empty').remove();
+    filterFun: function (value) {
+
+        if(value!= '0'){
+                      return "中"+value.toFixed(2)+'元';
+                }else{
+            return '';
+        }
     },
-    watch: {
-     allOrderList: function(){
-        setTimeout(function(){
-           this.eleH = this.scrContent.offsetHeight;
-       }.bind(this),1000)
-    }
+    filterFun2: function (value) {  
+        if(value!= '已中奖'){
+                      return value;
+                }else{
+            return '';
+        }     
+
+    },
+    filter_actualValue: function (value) {  
+        if(value!= '' && value!= null && value!= '0'){
+                      return '优惠'+value+'元';
+                }else{
+            return '';
+        }     
+
+    },
+    filter_addPrizeAmt: function (value) {  
+        if(value!= '' && value!= null && value!= '0'){
+                      return '加奖'+value+'元';
+                }else{
+            return '';
+        }     
+
+    },
+    filter_gold: function (value) {
+        if(value!= '' && value!= null  && value!= '0'){
+            return '金币'+value+'个';
+
+        }else{
+            return '';
+        }     
+
+    },
+},
+mounted:function(){
+    $('.allOrderList-menu,.tips').hide();
+    this.checkLogin();
+
+    this.scrContainer = this.$el;
+    this.scrContent = this.$el.querySelector(".ol-content")
+    coinsole.log(this.scrContent);
+    this.eleH = this.scrContent.offsetHeight;
+    this.loadMore(0);
+    this.scrContent.addEventListener('scroll', function(e){
+        console.log(1);
+      if(this.isTouchScreenBtm(e)){
+         this.loadMore(this.condition);
+     }
+ }.bind(this));
+},
+
+created(){
+    var that = this;
+    $('.result_prizeAmt').find(':empty').remove();
+},
+watch: {
+   allOrderList: function(){
+      setTimeout(function(){
+         this.eleH = this.scrContent.offsetHeight;   
+     }.bind(this),1000);
+  }
 },
 methods: {
   getOrderDetail(id){
         //this.$router.push({ name: 'zixun-detail', params: { id: id }})
-    },
-    filter_order(){
-        console.log(0);
-    },
+    },     
     isTouchScreenBtm: function(e){
         var winH = window.innerHeight || document.documentElement.clientHeight;
-        var navH = document.querySelector(".top-nav").offsetHeight * 2;
-        var innerWinH = winH - navH + 168;
+
+        var innerWinH = winH;
         var eleH = this.eleH;
         var scrT = this.scrContainer.scrollTop;
         if(scrT >= eleH - innerWinH){
-         return true;
-     }else{
-         return false
-     }
- },
- loadMore: function() {
-    if(this.busy){
-     return;
- }
- var start = this.allOrderList.length;
- this.busy = true;
- this.spinnerFlag = true;
- var that = this;
+           return true;
+       }else{
+           return false
+       }
+   },
+   filter_order:function(e){
 
- $.ajax({
+    var type_text = e.currentTarget.innerText;
+    this.condition =e.currentTarget.children[0].children[0].children[0].children[1].innerText;
+
+    document.querySelector('.md-tab-header:first-child.md-active span').innnerHTML = type_text;
+    e.currentTarget.parentElement.style.display='none';
+
+    this.loadMore(this.condition);
+
+},
+loadMore: function(type) {
+    if(!Store.get('username')){
+        return;
+    }
+
+    if(this.busy){
+       return;
+   }
+   var start = this.allOrderList.length;
+   this.busy = true;
+   this.spinnerFlag = true;
+   var that = this;
+
+   $.ajax({
     url:AJAXURL,
     type: "post",
     jsonp: "callbackfun",
@@ -217,60 +234,32 @@ methods: {
         jscallback:'callback',
         agentId:'agent_wap',
         status:0,
-        type:0,
+        type:type,
         firstResult:start,
         maxResult:10
-
     },
     success: function(response) {
+        console.dir(response.data);
 
-        that.allOrderList.push(response.data);
-        this.busy = false;
-        this.spinnerFlag = false;
+        that.allOrderList=dataRecombinant(response.data);
+
+        that.busy = false;
+        that.spinnerFlag = false;
 
     },
     error: function(response) {
-        console.log(JSON.stringify(response));
-    }
+     console.log('冷静，看看全部订单tab页哪里出错了');
+ }
 
 });
 
-},
-getAllOrderList(){
-    var that = this;
-
-    $.ajax({
-        url:AJAXURL,
-        type: "post",
-        jsonp: "callbackfun",
-        jsonpCallback:'callback',
-        dataType: "jsonp",
-        data: {
-            command:'findUserOrders',                           
-            authToken:Store.get('accessToken'),
-            jscallback:'callback',
-            agentId:'agent_wap',
-            status:0,
-            type:0,
-            firstResult:0,
-            maxResult:10
-
-        },
-        success: function(response) {
-            that.allOrderList = dataRecombinant(response.data);
-        },
-        error: function(response) {
-            console.log(JSON.stringify(response));
-        }
-
-    });
 },
 checkLogin(){
     if(!Store.get('username')){
         $('.tips').show();
         $('.allOrderLists').hide();
     }else{
-        this.getAllOrderList();
+        //this.getAllOrderList();
     }
 }
 }
@@ -307,11 +296,10 @@ var formatDatefun = function (date) {
 
 //数据重组
 var dataRecombinant = function(data){
-    console.log(data);
     //新对象、新数组
     var obj = {}, arr = [];
 
-    console.time('test');
+   // console.time('test');
 
     //遍历数据，按日期将数据加入新数组orderList中
     for(var i = 0, len = data.length; i < len ; i++){
@@ -333,189 +321,195 @@ var dataRecombinant = function(data){
     for(var key in obj){
         arr.push(obj[key]);
     }
-    console.timeEnd('test');
-
-    console.dir('新数组： '+arr);
-
-    return arr;
+   // console.timeEnd('test');
+   return arr;
 }
 
 </script>
 <style scoped lang="scss">
+    .ol-container{
+       text-align: center;
+       height: 77vh;
+       overflow-y: scroll;
+   }
 
-    #allOrderList .ol-content{
-        position:relative;
-        z-index: 2;
-        height: 100%;
-        overflow-y: scroll;
+   #allOrderList .ol-content{
+    position:relative;
+    z-index: 2;
+    height: auto;
 
-        .md-list.md-triple-line.allOrderLists{
-            .md-list-item .md-list-item-container{
-                min-height:1rem;
-                padding-left:0;
+    .md-list.md-triple-line.allOrderLists{
+        .md-list-item .md-list-item-container{
+            min-height:1rem;
+            padding-left:0;
 
-                .md-list-item-holder .md-avatar{
-                    width: .8rem;
-                    background-color:#f4f4f4;
-                    font-size: .28rem;
-                    color:#666;
-                    border-right:.01rem solid #d4d4d4;
-                    text-align: center;
-                    line-height: .5rem;
-                    .date{
-                        color:#333;
-                        font-size: .36rem;
-                    }
+            .md-list-item-holder .md-avatar{
+                width: .8rem;
+                background-color:#f4f4f4;
+                font-size: .28rem;
+                color:#666;
+                border-right:.01rem solid #d4d4d4;
+                text-align: center;
+                line-height: .5rem;
+                .date{
+                    color:#333;
+                    font-size: .36rem;
                 }
+            }
 
-                .order-container{
+            .order-container{
+                display: flex;
+                flex-direction: row;
+                align-content: center;
+                justify-content: space-between;
+                padding-left:1rem;
+                border-bottom: .01rem solid #d4d4d4;
+
+                .lotteryTypeName{
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
                     align-content: center;
                     justify-content: space-between;
-                    padding-left:1rem;
-                    border-bottom: .01rem solid #d4d4d4;
-                    
-                    .lotteryTypeName{
-                        display: flex;
-                        flex-direction: column;
-                        align-content: center;
-                        justify-content: space-between;
-                        font-size: .32rem;
-                        color:#000;
-                        line-height: .5rem;
+                    font-size: .32rem;
+                    color:#000;
+                    line-height: .5rem;
 
-                        .lotteryTypeName-b{
-                            display: flex;
-                            flex-direction: row;
-                            align-content: center;
-                            justify-content: space-between;
-                            font-size: .28rem;
-                            color: #999;                                
-                            .amount{
-                                margin-right: .2rem;
-                            }
-                        }
-
-
-                    }
-
-                    .result_prizeAmt{
-                        height: 1rem;
+                    .lotteryTypeName-b{
                         display: flex;
                         flex-direction: row;
                         align-content: center;
                         justify-content: space-between;
+                        font-size: .28rem;
+                        color: #999;                                
+                        .amount{
+                            margin-right: .2rem;
+                        }
+                    }
 
-                        .result_prizeAmt_l{
+
+                }
+
+                .result_prizeAmt{
+                    height: 1rem;
+                    display: flex;
+                    flex-direction: row;
+                    align-content: center;
+                    justify-content: space-between;
+
+                    .result_prizeAmt_l{
+                        display: flex;
+                        flex-direction: column;
+                        align-content: center;
+                        justify-content: center;
+                        margin-right: .3rem;
+                        font-size: .32rem;
+                        color:#666;
+                        line-height: .5rem;
+
+                        .result_prizeAmt_l_t{
                             display: flex;
-                            flex-direction: column;
+                            flex-direction: row;
                             align-content: center;
-                            justify-content: center;
-                            margin-right: .3rem;
-                            font-size: .32rem;
-                            color:#666;
+                            justify-content: space-between;
 
-                            .result_prizeAmt_l_t{
-                                display: flex;
-                                flex-direction: row;
-                                align-content: center;
-                                justify-content: space-between;
-
-                                .prizeAmt{
-                                    color:#eb1c42;
-                                }
-                                .status{
-                                    color:#666;
-                                }
+                            .prizeAmt{
+                                color:#eb1c42;
                             }
-                            
-                            .result_prizeAmt_l_b{
-                                display: flex;
-                                flex-direction: row;
-                                align-content: center;
-                                justify-content: flex-end;
-                                color:#fff;
-                                font-size:.2rem;
-                                *{
-                                    margin-left:.1rem;
-                                }
-                                .actualValue{
-                                    background-color:#46babb;
-                                    padding:0 .1rem;
-                                    height: .34rem;
-                                    line-height:.34rem;
-                                }
-                                .addPrizeAmt{
-                                    background-color:#ff5b74;
-                                    padding:0 .1rem;
-                                    height: .34rem;
-                                    line-height:.34rem;
-                                }
-
-                                .actualValue + .addPrizeAmt,
-                                .actualValue + .gold,
-                                .addPrizeAmt+ .gold{
-                                    margin-left: .1rem;
-                                }
-
-                                .gold{
-                                    background-color:#4ea3d4;
-                                    padding:0 .1rem;
-                                    height: .34rem;
-                                    line-height:.34rem;
-                                }
-                                .view_result_prizeAmt{
-                                    width: .1rem;
-                                    height: .2rem;
-                                    margin-left: .2rem;
-                                    margin-top: .4rem;
-                                }
+                            .status{
+                                color:#666;
                             }
-
                         }
 
-                        .result_prizeAmt_r{
-                            line-height: 1rem;
+                        .result_prizeAmt_l_b{
+                            display: flex;
+                            flex-direction: row;
+                            align-content: center;
+                            justify-content: flex-end;
+                            color:#fff;
+                            font-size:.2rem;
+                            *{
+                                margin-left:.1rem;
+                            }
+                            .actualValue{
+                                background-color:#46babb;
+                                padding:0 .1rem;
+                                height: .34rem;
+                                line-height:.34rem;
+                            }
+                            .addPrizeAmt{
+                                background-color:#ff5b74;
+                                padding:0 .1rem;
+                                height: .34rem;
+                                line-height:.34rem;
+                            }
+
+                            .actualValue + .addPrizeAmt,
+                            .actualValue + .gold,
+                            .addPrizeAmt+ .gold{
+                                margin-left: .1rem;
+                            }
+
+                            .gold{
+                                background-color:#4ea3d4;
+                                padding:0 .1rem;
+                                height: .34rem;
+                                line-height:.34rem;
+                            }
+                            .view_result_prizeAmt{
+                                width: .1rem;
+                                height: .2rem;
+                                margin-left: .2rem;
+                                margin-top: .4rem;
+                            }
                         }
-
-
-
-
 
                     }
-                }
-                .sub-order-list{
-                    min-height: 1rem;
-                    height: 1rem;
-                }
-                .md-list-text-container>:nth-child(3){
-                    color:inherit;
-                }
+
+                    .result_prizeAmt_r{
+                        line-height: 1rem;
+                    }
 
 
 
+
+
+                }
             }
-        } 
+            .sub-order-list{
+                min-height: 1rem;
+                height: 1rem;
+            }
+            .md-list-text-container>:nth-child(3){
+                color:inherit;
+            }
 
-        .md-list.md-triple-line.allOrderList-menu{
-            width:33.3333%;
-            border:1px solid #d4d4d4;
-            position:absolute;
-            left: 0;
-            top:0;
-            z-index: 3;
+
+
         }
+    } 
 
-        .tips{
-            width: 100%;
+    .md-list.md-triple-line.allOrderList-menu{
+        width:33.3333%;
+        border:1px solid #d4d4d4;
+        position:absolute;
+        left: 0;
+        top:0;
+        z-index: 3;
 
-            line-height: 1rem;
-            text-align: center;
-            padding-top: .5rem;
+        .order_type_id{
+            display:none;
         }
-
     }
+
+    .tips{
+        width: 100%;
+
+        line-height: 1rem;
+        text-align: center;
+        padding-top: .5rem;
+    }
+
+}
 
 
 

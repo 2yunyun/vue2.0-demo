@@ -2,9 +2,10 @@
   <div id="allOrderList" class="ol-container">
     <div class="ol-content">
         <md-list class="custom-list md-triple-line allOrderList-menu">
-            <md-list-item v-for="menu in menuList">
-                <div class="md-list-text-container" @click='filter_order()'>
-                    {{menu.name}}
+            <md-list-item v-for="menu in menuList" @click.native='filter_order($event)'>
+                <div class="md-list-text-container">
+                    <span class="order_type_text">{{menu.name}}</span>
+                    <span class="order_type_id">{{menu.id}}</span>
                 </div>
                 <md-divider class="md-inset"></md-divider>
             </md-list-item>
@@ -43,18 +44,19 @@
                                 </div>
                             </div>
                             <div class="result_prizeAmt_r">
-                             <img class="view_result_prizeAmt" src="statics/img/mine/gray-you-JT@2x.png" alt=">">
-                         </div>
-                     </div>
-                 </div>
-             </div>
+                               <img class="view_result_prizeAmt" src="statics/img/mine/gray-you-JT@2x.png" alt=">">
+                           </div>
+                       </div>
+                   </div>
+               </div>
 
 
-             <md-divider class="md-inset"></md-divider>
-         </md-list-item>
-     </md-list>
+               <md-divider class="md-inset"></md-divider>
+           </md-list-item>
 
- </div>
+       </md-list>
+
+   </div>
 </div>
 
 </template>
@@ -64,153 +66,183 @@
 
     export default {
         data(){
-         return {
+           return {
             scrContainer: null,
             scrContent: null,
             eleH: 0,
             spinnerFlag: true,
             busy: false,
             allOrderList: [],
+            dataLength:0,
+            condition:0,
             menuList: [
             {
-                id:'',
+                id:'0',
                 name: "全部订单"
             },
             {
-                id:'',
+                id:'2',
                 name: "追号订单"
             },
             {
-                id:'',
+                id:'3',
                 name: "合买订单"
             },
             {
-                id:'',
+                id:'6',
                 name: "晒单订单"
             },
             {
-                id:'',
+                id:'7',
                 name: "跟单订单"
             }
             ]
         }
     },
-    computed:{
+    computed: {
 
     },
     filters: {
-        filter_month: function (value) {
 
-            return formatMonth(value);
-        },
-        filter_date: function (value) {
+       filter_month: function (value) {
 
-            return formatDate(value);
-        },
-
-        filterFun: function (value) {
-
-            if(value!= '0'){
-                          return "中"+value.toFixed(2)+'元';
-                    }else{
-                return '';
-            }
-        },
-        filterFun2: function (value) {  
-            if(value!= '已中奖'){
-                          return value;
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_actualValue: function (value) {  
-            if(value!= '' && value!= null && value!= '0'){
-                          return '优惠'+value+'元';
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_addPrizeAmt: function (value) {  
-            if(value!= '' && value!= null && value!= '0'){
-                          return '加奖'+value+'元';
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_gold: function (value) {
-            if(value!= '' && value!= null  && value!= '0'){
-                return '金币'+value+'个';
-                
-            }else{
-                return '';
-            }     
-
-        },
+        return formatMonth(value);
     },
-    mounted:function(){
-        $('.allOrderList-menu,.tips').hide();
-        this.checkLogin();
+    filter_date: function (value) {
 
-        this.scrContainer = this.$el;
-        this.scrContent = this.$el.querySelector(".ol-content")
-        this.eleH = this.scrContent.offsetHeight;
-        this.loadMore();
-        this.scrContent.addEventListener('scroll', function(e){
-          if(this.isTouchScreenBtm(e)){
-             this.loadMore();
-         }
-     }.bind(this)) 
-
-
+        return formatDate(value);
     },
 
-    created(){
-        $('.result_prizeAmt').find(':empty').remove();
+    filterFun: function (value) {
+
+        if(value!= '0'){
+                      return "中"+value.toFixed(2)+'元';
+                }else{
+            return '';
+        }
     },
-    watch: {
-       allOrderList: function(){
-        setTimeout(function(){
-         this.eleH = this.scrContent.offsetHeight;
-     }.bind(this),1000)
-    }
+    filterFun2: function (value) {  
+        if(value!= '已中奖'){
+                      return value;
+                }else{
+            return '';
+        }     
+
+    },
+    filter_actualValue: function (value) {  
+        if(value!= '' && value!= null && value!= '0'){
+                      return '优惠'+value+'元';
+                }else{
+            return '';
+        }     
+
+    },
+    filter_addPrizeAmt: function (value) {  
+        if(value!= '' && value!= null && value!= '0'){
+                      return '加奖'+value+'元';
+                }else{
+            return '';
+        }     
+
+    },
+    filter_gold: function (value) {
+        if(value!= '' && value!= null  && value!= '0'){
+            return '金币'+value+'个';
+
+        }else{
+            return '';
+        }     
+
+    },
+},
+mounted:function(){
+    $('.allOrderList-menu,.tips').hide();
+    // $('.ol-container').height(window.innerHeight - 558 + 'px');
+
+    this.checkLogin();
+
+    this.scrContainer = this.$el;
+    this.scrContent = this.$el.querySelector(".ol-content")
+    this.eleH = this.scrContent.offsetHeight;
+    this.loadMore(0);
+},
+
+created(){
+    var that = this;
+    $('.result_prizeAmt').find(':empty').remove();
+
+    window.addEventListener('scroll',function(e){
+        console.log('当前数据是第： '+that.dataLength+' 条');
+
+        if(that.isTouchScreenBtm(e)){
+           that.loadMore(that.condition);
+       }
+   });
+
+    // $("#allOrderList").on('scroll',function(){
+    //     console.log('ol-content 滚动了');
+    //     console.log('当前数据是第： '+that.dataLength+' 条');
+
+    //     if(that.isTouchScreenBtm(e)){
+
+    //        that.loadMore(that.condition);
+    //    }
+    // });
+    
+
+},
+watch: {
+ allOrderList: function(){
+  setTimeout(function(){
+   this.eleH = this.scrContent.offsetHeight;   
+}.bind(this),1000);
+}
 },
 methods: {
   getOrderDetail(id){
         //this.$router.push({ name: 'zixun-detail', params: { id: id }})
-    },
-    filter_order(){
-        console.log(0);
-    },
+    },     
     isTouchScreenBtm: function(e){
+        console.log(e.currentTarget);
+        alert('scroll');
         var winH = window.innerHeight || document.documentElement.clientHeight;
 
         var innerWinH = winH;
         var eleH = this.eleH;
         var scrT = this.scrContainer.scrollTop;
+        console.log('eleH - innerWinH是：'+(eleH - innerWinH));
         if(scrT >= eleH - innerWinH){
-           return true;
-       }else{
-           return false
-       }
-   },
-   loadMore: function() {
+         return true;
+     }else{
+         return false
+     }
+ },
+ filter_order:function(e){
+
+    var type_text = e.currentTarget.innerText;
+    this.condition =e.currentTarget.children[0].children[0].children[0].children[1].innerText;
+
+    document.querySelector('.md-tab-header:first-child.md-active span').innnerHTML = type_text;
+    e.currentTarget.parentElement.style.display='none';
+
+    this.loadMore(this.condition);
+
+},
+loadMore: function(type) {
     if(!Store.get('username')){
         return;
     }
 
     if(this.busy){
-       return;
-   }
-   var start = this.allOrderList.length;
-   console.log(start);
-   this.busy = true;
-   this.spinnerFlag = true;
-   var that = this;
+     return;
+ }
+ var start = this.dataLength;
 
-   $.ajax({
+ this.busy = true;
+ this.spinnerFlag = true;
+ var that = this;
+
+ $.ajax({
     url:AJAXURL,
     type: "post",
     jsonp: "callbackfun",
@@ -222,20 +254,23 @@ methods: {
         jscallback:'callback',
         agentId:'agent_wap',
         status:0,
-        type:0,
+        type:type,
         firstResult:start,
         maxResult:10
     },
     success: function(response) {
-       that.allOrderList=dataRecombinant(response.data);
+        console.dir(response.data);
+        that.dataLength += response.data.length;
 
-       that.busy = false;
-       that.spinnerFlag = false;
+        dataRecombinant(response.data,that);
 
-   },
-   error: function(response) {
-    console.log(JSON.stringify(response));
-}
+        that.busy = false;
+        that.spinnerFlag = false;
+
+    },
+    error: function(response) {
+       console.log('冷静，看看全部订单tab页哪里出错了');
+   }
 
 });
 
@@ -281,12 +316,12 @@ var formatDatefun = function (date) {
 
 
 //数据重组
-var dataRecombinant = function(data){
-    console.log(data);
+var dataRecombinant = function(data,vm){
     //新对象、新数组
-    var obj = {}, arr = [];
+    var obj = {};
 
-    console.time('test');
+
+   // console.time('test');
 
     //遍历数据，按日期将数据加入新数组orderList中
     for(var i = 0, len = data.length; i < len ; i++){
@@ -306,24 +341,24 @@ var dataRecombinant = function(data){
         }   
     }
     for(var key in obj){
-        arr.push(obj[key]);
+        vm.allOrderList.push(obj[key]);
     }
-    console.timeEnd('test');
+    console.log('数据源长度：'+vm.allOrderList.length);
 
-    console.dir('新数组： '+arr);
-
-    return arr;
+    console.log('数据源：'+JSON.stringify(vm.allOrderList));
+   // console.timeEnd('test');
+   return vm.allOrderList;
 }
 
 </script>
 <style scoped lang="scss">
     .ol-container{
-       text-align: center;
-       height: 77vh;
-       overflow-y: scroll;
-   }
+     text-align: center;
+     height: calc( 100% - 5.58rem );
+     overflow-y: scroll;
+ }
 
-   #allOrderList .ol-content{
+ #allOrderList .ol-content{
     position:relative;
     z-index: 2;
     height: auto;
@@ -485,6 +520,10 @@ var dataRecombinant = function(data){
         left: 0;
         top:0;
         z-index: 3;
+
+        .order_type_id{
+            display:none;
+        }
     }
 
     .tips{
