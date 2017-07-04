@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<style type="text/css">
+body{
+    width:40em;
+    margin:0 auto;
+}
+article{
+    float:left;
+}
+aside{
+    float:right;
+}
+p{
+    line-height:3em;
+}
+</style>
+</head>
+<body>
+<article>
+<p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p><p>内容</p>
+</article>
+<aside>
+<p>侧边栏</p><p>侧边栏</p><p>侧边栏</p>
+<div id="float"><p>漂浮侧边栏</p></div>
+</aside>
+<script type="text/javascript">
+window.onload=
+function(){
+    var oDiv = document.getElementById("float"),
+    H = 0,
+    Y = oDiv
+    while (Y) {H += Y.offsetTop; Y = Y.offsetParent}
+    window.onscroll = function()
+    {
+        var s = document.body.scrollTop || document.documentElement.scrollTop
+        if(s>H) {
+            oDiv.style = "position:fixed;top:0;"
+        } else {
+            oDiv.style = ""
+        }
+    }
+}
+</script>
+</body>
+</html>

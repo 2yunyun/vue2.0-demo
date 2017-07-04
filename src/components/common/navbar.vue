@@ -70,14 +70,8 @@
 					return this.$store.getters.THEME_COLOR
 				},
 				activeRoute(){
-					console.log('activeRoute:  '+this.$store.state.activeRoute);
-
 					return this.$store.state.activeRoute;
-
-
 				}
-
-
 			},
 			watch:{
 				activeRoute(){
@@ -92,7 +86,7 @@
 				doAction(index) {
 					this.$store.commit('ROUTE_CHANGE',{activeRoute: this.$route.name})
 					this.go(index);
-					this.setActiveNav()
+					this.setActiveNav();
 					$('.footerbar button').each(function(i,v){
 						if(i==index){
 							$(v).find('img').eq(0).hide();
@@ -133,7 +127,7 @@
 					//检查是否登录，存储并跳转至目标路径
 					this.$router.push({name:'我的'});
 				}else{
-					Store.set('to','我的');
+					// Store.set('to','我的');
 					this.$router.push({name:'login'});
 				}
 			}

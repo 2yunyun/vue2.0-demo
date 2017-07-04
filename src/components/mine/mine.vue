@@ -4,8 +4,6 @@
 			<md-layout class="usercenter" md-gutter>
 				<!-- <img class="album-img" src="statics/img/mine/background@2x.png">
 			-->
-
-
 			<md-card class="mine-card">
 				<md-card-media-cover md-solid>
 					<md-card-media>
@@ -25,7 +23,7 @@
 						</md-card-header>
 
 						<md-card-actions>
-							<md-button>
+							<md-button  class="balance_btn" @click='gotoBalance()'>
 								<div class="balance_info">
 									余额
 									<div class="balance"><span class="v_balance">8.5</span><span>元</span></div>
@@ -33,7 +31,7 @@
 								<img class="view_balance" src="statics/img/mine/white--you-JT@2x.png" alt=">">
 							</md-button>
 							<img src="statics/img/mine/fengexian-shang@2x.png" alt="|">
-							<md-button>
+							<md-button class="gold_btn" @click='gotoGold()'>
 								<div class="gold_info">
 									金币
 									<div class="gold"><span class="v_gold">43</span><span>个</span></div>
@@ -44,9 +42,9 @@
 						</md-card-actions>
 						<md-card-actions class="other_actions">
 							<md-button><img  src="statics/img/mine/chongzhi@2x.png" alt="充值">充值</md-button>
-							<img src="statics/img/mine/fengexian-xia@2x.png" alt="|">
+							<img class="fengexian" src="statics/img/mine/fengexian-xia@2x.png" alt="|">
 							<md-button><img  src="statics/img/mine/tixian@2x.png" alt="提现">提现</md-button>
-							<img src="statics/img/mine/fengexian-xia@2x.png" alt="|">
+							<img  class="fengexian"  src="statics/img/mine/fengexian-xia@2x.png" alt="|">
 							<md-button><img  align="" src="statics/img/mine/youhuiquan@2x.png" alt="优惠券">优惠券</md-button>
 						</md-card-actions>
 					</md-card-area>
@@ -91,6 +89,15 @@
 			$('.uname.unLogin').on('click',function(){
 				Store.set('to','我的');
 				that.$router.push({name:'login'});
+			});
+
+			$('#mine').on("click",function(e){
+				var target = $(e.target); 
+				console.log(target.closest(".md-tab-header:first-child.md-active").length);
+				if(target.closest(".md-tab-header:first-child.md-active").length == 0){ 
+					$('.allOrderList-menu').hide();
+					$('.md-tab-header:first-child.md-active').css('background-image','url(statics/img/mine/xuanxiangtiao_down@2x.png)');
+				}
 			});
 
 			
@@ -207,6 +214,12 @@
 					}
 
 				}
+			},
+			gotoBalance(){
+				this.$router.push({ name: '余额'});
+			},
+			gotoGold(){
+				this.$router.push({ name: '金币'});
 			}
 
 
@@ -217,7 +230,8 @@
 <style lang="scss" scoped>
 	#mine{
 		padding-bottom: .98rem;
-		overflow:hidden;
+		/*overflow:hidden;*/
+		min-height:6rem;
 
 		.md-layout{
 			padding:0;
@@ -297,6 +311,8 @@
 							}
 							img{
 								margin-top: .3rem;
+								width: .11rem;
+								height: .21rem;
 							}
 
 						}
@@ -312,6 +328,12 @@
 						img{
 							margin-top: 0;
 							margin-right:.1rem;
+							width: .32rem;
+							height: .32rem;
+						}
+						img.fengexian{
+							width: .01rem;
+							height: .39rem;
 						}
 					}
 

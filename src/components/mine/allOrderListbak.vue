@@ -44,29 +44,30 @@
                                 </div>
                             </div>
                             <div class="result_prizeAmt_r">
-                             <img class="view_result_prizeAmt" src="statics/img/mine/gray-you-JT@2x.png" alt=">">
-                         </div>
-                     </div>
-                 </div>
-             </div>
+                               <img class="view_result_prizeAmt" src="statics/img/mine/gray-you-JT@2x.png" alt=">">
+                           </div>
+                       </div>
+                   </div>
+               </div>
 
 
-             <md-divider class="md-inset"></md-divider>
-         </md-list-item>
+               <md-divider class="md-inset"></md-divider>
+           </md-list-item>
 
-     </md-list>
+       </md-list>
 
- </div>
+   </div>
 </div>
 
 </template>
 <script>
+    import Util from '../../util/util'
     import $ from "n-zepto"
     import Store from "../../assets/js/storage.js"
 
     export default {
         data(){
-         return {
+           return {
             scrContainer: null,
             scrContent: null,
             eleH: 0,
@@ -103,7 +104,7 @@
     },
     filters: {
 
-     filter_month: function (value) {
+       filter_month: function (value) {
 
         return formatMonth(value);
     },
@@ -165,10 +166,10 @@ mounted:function(){
     this.loadMore(0);
     this.scrContent.addEventListener('scroll', function(e){
         console.log(1);
-      if(this.isTouchScreenBtm(e)){
-         this.loadMore(this.condition);
-     }
- }.bind(this));
+        if(this.isTouchScreenBtm(e)){
+           this.loadMore(this.condition);
+       }
+   }.bind(this));
 },
 
 created(){
@@ -176,11 +177,11 @@ created(){
     $('.result_prizeAmt').find(':empty').remove();
 },
 watch: {
-   allOrderList: function(){
-      setTimeout(function(){
-         this.eleH = this.scrContent.offsetHeight;   
-     }.bind(this),1000);
-  }
+ allOrderList: function(){
+  setTimeout(function(){
+   this.eleH = this.scrContent.offsetHeight;   
+}.bind(this),1000);
+}
 },
 methods: {
   getOrderDetail(id){
@@ -193,17 +194,17 @@ methods: {
         var eleH = this.eleH;
         var scrT = this.scrContainer.scrollTop;
         if(scrT >= eleH - innerWinH){
-           return true;
-       }else{
-           return false
-       }
-   },
-   filter_order:function(e){
+         return true;
+     }else{
+         return false
+     }
+ },
+ filter_order:function(e){
 
     var type_text = e.currentTarget.innerText;
     this.condition =e.currentTarget.children[0].children[0].children[0].children[1].innerText;
 
-    document.querySelector('.md-tab-header:first-child.md-active span').innnerHTML = type_text;
+    document.querySelector('.md-tab-header:first-child.md-active span').innerHTML = type_text;
     e.currentTarget.parentElement.style.display='none';
 
     this.loadMore(this.condition);
@@ -215,14 +216,14 @@ loadMore: function(type) {
     }
 
     if(this.busy){
-       return;
-   }
-   var start = this.allOrderList.length;
-   this.busy = true;
-   this.spinnerFlag = true;
-   var that = this;
+     return;
+ }
+ var start = this.allOrderList.length;
+ this.busy = true;
+ this.spinnerFlag = true;
+ var that = this;
 
-   $.ajax({
+ $.ajax({
     url:AJAXURL,
     type: "post",
     jsonp: "callbackfun",
@@ -248,8 +249,8 @@ loadMore: function(type) {
 
     },
     error: function(response) {
-     console.log('冷静，看看全部订单tab页哪里出错了');
- }
+       console.log('冷静，看看全部订单tab页哪里出错了');
+   }
 
 });
 
@@ -328,12 +329,12 @@ var dataRecombinant = function(data){
 </script>
 <style scoped lang="scss">
     .ol-container{
-       text-align: center;
-       height: 77vh;
-       overflow-y: scroll;
-   }
+     text-align: center;
+     height: 77vh;
+     overflow-y: scroll;
+ }
 
-   #allOrderList .ol-content{
+ #allOrderList .ol-content{
     position:relative;
     z-index: 2;
     height: auto;

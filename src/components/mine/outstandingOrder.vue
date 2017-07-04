@@ -1,10 +1,10 @@
 <template>
   <div id="outstandingOrder" class="ol-container">
-    <div class="ol-content">       
+    <div class="ol-content">
         <div class="tips">登录后才能查看订单哦~</div>
-        <md-list class="custom-list md-triple-line allOrderLists outstandingOrder">
+        <md-list class="custom-list md-triple-line allOrderLists outstandingOrderLists">
 
-            <md-list-item v-for="oderByTime in outstandingOrder">
+            <md-list-item v-for="oderByTime in outstandingOrderList">
                 <md-avatar>
                     <p class="month">{{oderByTime.orderTime  | filter_month(value)}}月</p>
                     <p class="date">{{oderByTime.orderTime  | filter_date(value)}}</p>
@@ -43,13 +43,21 @@
 
                <md-divider class="md-inset"></md-divider>
            </md-list-item>
-       </md-list>
 
-   </div>
+       </md-list>
+       <md-spinner :class="spinnerClass" :md-size="60" md-indeterminate v-show='spinnerFlag'></md-spinner>
+       <!-- <hsy-dialog class="test" v-show="visible" @click="handleYes">
+        <div slot="title">提示</div>
+        <div slot="body">
+            ~~
+        </div>
+    </hsy-dialog> -->
+</div>
 </div>
 
 </template>
 <script>
+    import Util from '../../util/util'
     import $ from "n-zepto"
     import Store from "../../assets/js/storage.js"
 
@@ -61,120 +69,142 @@
             eleH: 0,
             spinnerFlag: true,
             busy: false,
-            outstandingOrder: []
+            outstandingOrderList: [],
+            dataLength:0,
+            visible: false
         }
     },
-    computed:{
+    computed: {
+     spinnerClass(){
+      return this.$store.getters.SPINNER_CLASS
+  }
+},
+filters: {
 
-    },
-    filters: {
-        filter_month: function (value) {
+   filter_month: function (value) {
 
-            return formatMonth(value);
-        },
-        filter_date: function (value) {
+    return formatMonth(value);
+},
+filter_date: function (value) {
 
-            return formatDate(value);
-        },
+    return formatDate(value);
+},
 
-        filterFun: function (value) {
+filterFun: function (value) {
 
-            if(value!= '0'){
-                          return "中"+value.toFixed(2)+'元';
-                    }else{
-                return '';
-            }
-        },
-        filterFun2: function (value) {  
-            if(value!= '已中奖'){
-                          return value;
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_actualValue: function (value) {  
-            if(value!= '' && value!= null && value!= '0'){
-                          return '优惠'+value+'元';
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_addPrizeAmt: function (value) {  
-            if(value!= '' && value!= null && value!= '0'){
-                          return '加奖'+value+'元';
-                    }else{
-                return '';
-            }     
-
-        },
-        filter_gold: function (value) {
-            if(value!= '' && value!= null  && value!= '0'){
-                return '金币'+value+'个';
-                
-            }else{
-                return '';
-            }     
-
-        },
-    },
-    mounted:function(){
-        $('.tips').hide();
-
-        this.checkLogin();
-
-        this.scrContainer = this.$el;
-        this.scrContent = this.$el.querySelector(".ol-content")
-        this.eleH = this.scrContent.offsetHeight;
-       // this.loadMore();
-        this.scrContainer.addEventListener('scroll', function(e){
-          if(this.isTouchScreenBtm(e)){
-           this.loadMore();
-       }
-   }.bind(this))
-
-
-    },
-
-    created(){
-        $('.result_prizeAmt').find(':empty').remove();
-    },
-    watch: {
-     outstandingOrder: function(){
-        setTimeout(function(){
-           this.eleH = this.scrContent.offsetHeight;
-       }.bind(this),1000)
+    if(value!= '0'){
+                  return "中"+value.toFixed(2)+'元';
+            }else{
+        return '';
     }
 },
+filterFun2: function (value) {  
+    if(value!= '已中奖'){
+                  return value;
+            }else{
+        return '';
+    }     
+
+},
+filter_actualValue: function (value) {  
+    if(value!= '' && value!= null && value!= '0'){
+                  return '优惠'+value+'元';
+            }else{
+        return '';
+    }     
+
+},
+filter_addPrizeAmt: function (value) {  
+    if(value!= '' && value!= null && value!= '0'){
+                  return '加奖'+value+'元';
+            }else{
+        return '';
+    }     
+
+},
+filter_gold: function (value) {
+    if(value!= '' && value!= null  && value!= '0'){
+        return '金币'+value+'个';
+
+    }else{
+        return '';
+    }     
+
+},
+},
+mounted:function(){
+    $('.tips').hide();
+    // $('.ol-container').height(window.innerHeight - 558 + 'px');
+    
+    this.checkLogin();
+    this.scrContainer = this.$el;
+    this.scrContent = this.$el.querySelector(".ol-content")
+    this.eleH = this.scrContent.offsetHeight;
+},
+
+created(){
+    var that = this;
+    $('.result_prizeAmt').find(':empty').remove();
+
+    window.addEventListener('scroll',function(e){
+
+        var s = document.body.scrollTop || document.documentElement.scrollTop
+        if(s>=400) {
+            document.querySelector(".mine-tabs nav").style = "position:fixed;top:0;width: 100%;background: #fff;";
+        } else {
+            document.querySelector(".mine-tabs nav").style = "";
+        }
+        
+        var index = $(document.querySelector('.md-tab-header.md-active span')).index();
+        if(index == 2){
+            if(that.isTouchScreenBtm(e)){
+             console.log('未开奖订单，当前数据是第： '+that.dataLength+' 条');
+             that.loadMore();
+         }
+     }else{
+        return;
+    }  
+
+
+});
+
+
+},
+watch: {
+ outstandingOrderList: function(){
+  setTimeout(function(){
+   this.eleH = this.scrContent.offsetHeight;   
+}.bind(this),1000);
+}
+},
 methods: {
-  getOrderDetail(id){
+   handleYes() {
+    this.visible = false
+},
+getOrderDetail(id){
         //this.$router.push({ name: 'zixun-detail', params: { id: id }})
-    },
-    filter_order(){
-        console.log(0);
-    },
-    isTouchScreenBtm: function(e){
+    },     
+    isTouchScreenBtm: function(e){       
         var winH = window.innerHeight || document.documentElement.clientHeight;
 
         var innerWinH = winH;
         var eleH = this.eleH;
         var scrT = this.scrContainer.scrollTop;
+
         if(scrT >= eleH - innerWinH){
          return true;
      }else{
          return false
      }
  },
- loadMore: function() {
-    if(!Store.get('username')){
-        return;
-    }
 
+ loadMore: function() {
+    
     if(this.busy){
      return;
  }
- var start = this.outstandingOrder.length;
+ var start = this.dataLength;
+
  this.busy = true;
  this.spinnerFlag = true;
  var that = this;
@@ -194,29 +224,44 @@ methods: {
         type:0,
         firstResult:start,
         maxResult:10
-
     },
     success: function(response) {
 
-        that.outstandingOrder=dataRecombinant(response.data);
-        
-        that.busy = false;
-        that.spinnerFlag = false;
+     if (response.errorcode == '0' && response.msg == '成功') {
+         that.dataLength += response.data.length;
 
-    },
-    error: function(response) {
-         console.log('冷静，看看哪里出错了');
+         dataRecombinant(response.data,that);
+
+
+     }else{
+        that.visible=true;
+        //$('.hsy-dialog .body').html(response.msg);
+        console.log(response.msg+'--未开奖订单tab页');
     }
+    that.busy = false;
+    that.spinnerFlag = false;
+},
+error: function(XMLHttpRequest, textStatus, errorThrown) {   
+    that.busy = false;
+    that.spinnerFlag = false;
+    that.visible=true;
+    console.log('未开奖订单tab页，查询失败');
+}
 
 });
 
 },
 checkLogin(){
+    var that = this;
     if(!Store.get('username')){
         $('.tips').show();
-        $('.outstandingOrder').hide();
+        $('.outstandingOrderLists').hide();
+        that.busy = false;
+        that.spinnerFlag = false;
+        that.visible=false;
+        
     }else{
-        //this.getAllOrderList();
+        this.loadMore();
     }
 }
 }
@@ -252,13 +297,12 @@ var formatDatefun = function (date) {
 
 
 //数据重组
-var dataRecombinant = function(data){
-
-    if(data.length == 0)return;
+var dataRecombinant = function(data,vm){
     //新对象、新数组
-    var obj = {}, arr = [];
+    var obj = {};
 
 
+   // console.time('test');
 
     //遍历数据，按日期将数据加入新数组orderList中
     for(var i = 0, len = data.length; i < len ; i++){
@@ -278,20 +322,20 @@ var dataRecombinant = function(data){
         }   
     }
     for(var key in obj){
-        arr.push(obj[key]);
+        vm.outstandingOrderList.push(obj[key]);
     }
-    
+    console.log('数据源长度：'+vm.outstandingOrderList.length);
 
-    //console.dir('新数组： '+arr);
-
-    return arr;
+    //console.log('outstandingOrderList数据源：'+JSON.stringify(vm.outstandingOrderList));
+   // console.timeEnd('test');
+   return vm.outstandingOrderList;
 }
 
 </script>
 <style scoped lang="scss">
     .ol-container{
      text-align: center;
-     height: 77vh;
+     height: calc( 100% - 5.58rem );
      overflow-y: scroll;
  }
 
@@ -450,10 +494,22 @@ var dataRecombinant = function(data){
         }
     } 
 
-    
+    .md-list.md-triple-line.allOrderList-menu{
+        width:33.3333%;
+        border:1px solid #d4d4d4;
+        position:absolute;
+        left: 0;
+        top:0;
+        z-index: 3;
+
+        .order_type_id{
+            display:none;
+        }
+    }
 
     .tips{
         width: 100%;
+        min-height:4.2rem;
 
         line-height: 1rem;
         text-align: center;

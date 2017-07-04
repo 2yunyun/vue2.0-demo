@@ -55,12 +55,20 @@
            </md-list-item>
 
        </md-list>
+       <md-spinner :class="spinnerClass" :md-size="60" md-indeterminate v-show='spinnerFlag'></md-spinner>
 
-   </div>
+     <!-- <hsy-dialog class="test" v-modal="visible" @click="handleYes">
+        <div slot="title">提示</div>
+        <div slot="body">
+            ~~
+        </div>
+    </hsy-dialog> -->
+</div>
 </div>
 
 </template>
 <script>
+    import Util from '../../util/util'
     import $ from "n-zepto"
     import Store from "../../assets/js/storage.js"
 
@@ -73,8 +81,10 @@
             spinnerFlag: true,
             busy: false,
             allOrderList: [],
+            isScroll:true,
             dataLength:0,
             condition:0,
+            visible:false,
             menuList: [
             {
                 id:'0',
@@ -100,60 +110,62 @@
         }
     },
     computed: {
+        spinnerClass(){
+          return this.$store.getters.SPINNER_CLASS
+      }
+  },
+  filters: {
 
-    },
-    filters: {
+   filter_month: function (value) {
 
-       filter_month: function (value) {
+    return formatMonth(value);
+},
+filter_date: function (value) {
 
-        return formatMonth(value);
-    },
-    filter_date: function (value) {
+    return formatDate(value);
+},
 
-        return formatDate(value);
-    },
+filterFun: function (value) {
 
-    filterFun: function (value) {
+    if(value!= '0'){
+                  return "中"+value.toFixed(2)+'元';
+            }else{
+        return '';
+    }
+},
+filterFun2: function (value) {  
+    if(value!= '已中奖'){
+                  return value;
+            }else{
+        return '';
+    }     
 
-        if(value!= '0'){
-                      return "中"+value.toFixed(2)+'元';
-                }else{
-            return '';
-        }
-    },
-    filterFun2: function (value) {  
-        if(value!= '已中奖'){
-                      return value;
-                }else{
-            return '';
-        }     
+},
+filter_actualValue: function (value) {  
+    if(value!= '' && value!= null && value!= '0'){
+                  return '优惠'+value+'元';
+            }else{
+        return '';
+    }     
 
-    },
-    filter_actualValue: function (value) {  
-        if(value!= '' && value!= null && value!= '0'){
-                      return '优惠'+value+'元';
-                }else{
-            return '';
-        }     
+},
+filter_addPrizeAmt: function (value) {  
+    if(value!= '' && value!= null && value!= '0'){
+                  return '加奖'+value+'元';
+            }else{
+        return '';
+    }     
 
-    },
-    filter_addPrizeAmt: function (value) {  
-        if(value!= '' && value!= null && value!= '0'){
-                      return '加奖'+value+'元';
-                }else{
-            return '';
-        }     
+},
+filter_gold: function (value) {
+    if(value!= '' && value!= null  && value!= '0'){
+        return '金币'+value+'个';
 
-    },
-    filter_gold: function (value) {
-        if(value!= '' && value!= null  && value!= '0'){
-            return '金币'+value+'个';
+    }else{
+        return '';
+    }     
 
-        }else{
-            return '';
-        }     
-
-    },
+},
 },
 mounted:function(){
     $('.allOrderList-menu,.tips').hide();
@@ -164,31 +176,36 @@ mounted:function(){
     this.scrContainer = this.$el;
     this.scrContent = this.$el.querySelector(".ol-content")
     this.eleH = this.scrContent.offsetHeight;
-    this.loadMore(0);
+
+
 },
 
 created(){
     var that = this;
     $('.result_prizeAmt').find(':empty').remove();
-
-    window.addEventListener('scroll',function(e){
-        console.log('当前数据是第： '+that.dataLength+' 条');
-
-        if(that.isTouchScreenBtm(e)){
-           that.loadMore(that.condition);
-       }
-   });
-
-    // $("#allOrderList").on('scroll',function(){
-    //     console.log('ol-content 滚动了');
-    //     console.log('当前数据是第： '+that.dataLength+' 条');
-
-    //     if(that.isTouchScreenBtm(e)){
-
-    //        that.loadMore(that.condition);
-    //    }
-    // });
     
+    window.addEventListener('scroll',function(e){
+
+        var s = document.body.scrollTop || document.documentElement.scrollTop
+        if(s>400) {
+            document.querySelector(".mine-tabs nav").style = "position:fixed;top:0;width: 100%;background: #fff;";
+        } else {
+            document.querySelector(".mine-tabs nav").style = "";
+        }
+
+        var index = $(document.querySelector('.md-tab-header.md-active span')).index();
+        if(index == 0){
+            if(that.isTouchScreenBtm(e)){
+                that.isScroll=true;
+                console.log('全部订单，当前数据是第： '+that.dataLength+' 条');
+                that.loadMore(that.condition);
+            }
+        } else{
+            return;
+        }
+
+
+    });
 
 },
 watch: {
@@ -199,18 +216,19 @@ watch: {
 }
 },
 methods: {
-  getOrderDetail(id){
+    handleYes() {
+        this.visible = false
+    },
+    getOrderDetail(id){
         //this.$router.push({ name: 'zixun-detail', params: { id: id }})
     },     
-    isTouchScreenBtm: function(e){
-        console.log(e.currentTarget);
-        alert('scroll');
+    isTouchScreenBtm: function(e){       
         var winH = window.innerHeight || document.documentElement.clientHeight;
 
         var innerWinH = winH;
         var eleH = this.eleH;
         var scrT = this.scrContainer.scrollTop;
-        console.log('eleH - innerWinH是：'+(eleH - innerWinH));
+        
         if(scrT >= eleH - innerWinH){
          return true;
      }else{
@@ -221,66 +239,81 @@ methods: {
 
     var type_text = e.currentTarget.innerText;
     this.condition =e.currentTarget.children[0].children[0].children[0].children[1].innerText;
-
-    document.querySelector('.md-tab-header:first-child.md-active span').innnerHTML = type_text;
+    this.isScroll =false;
+    document.querySelector('.md-tab-header:first-child.md-active span').innerHTML = type_text;
     e.currentTarget.parentElement.style.display='none';
 
+    //this.checkLogin();
     this.loadMore(this.condition);
 
 },
 loadMore: function(type) {
-    if(!Store.get('username')){
-        return;
-    }
 
     if(this.busy){
-     return;
- }
- var start = this.dataLength;
+        return;
+    }
+    var start = this.dataLength;
+    this.busy = true;
+    this.spinnerFlag = true;
+    var that = this;
+    $.ajax({
+        url:AJAXURL,
+        type: "post",
+        jsonp: "callbackfun",
+        jsonpCallback:'callback',
+        dataType: "jsonp",
+        data: {
+            command:'findUserOrders',
+            authToken:Store.get('accessToken'),
+            jscallback:'callback',
+            agentId:'agent_wap',
+            status:0,
+            type:type,
+            firstResult:start,
+            maxResult:10
+        },
+        success: function(response) {
+         if (response.errorcode == '0' && response.msg == '成功') {
+            if(that.isScroll == true){
+                that.dataLength += response.data.length;
+                dataRecombinant(response.data,that);
+            }else{
+                that.allOrderList = dataRecombinant(response.data,that);
+            }
+            
+            
+        }else{
+            that.visible=true;            
+           // $('.hsy-dialog .body').html(response.msg);
+           console.log(response.msg+'--全部订单页');
+       }
+       that.busy = false;
+       that.spinnerFlag = false;
+   },
+   error: function(XMLHttpRequest, textStatus, errorThrown) {
+    console.log(XMLHttpRequest.status);
+    console.log(XMLHttpRequest.readyState);
+    that.busy = false;
+    that.spinnerFlag = false;
+    that.visible=true;
 
- this.busy = true;
- this.spinnerFlag = true;
- var that = this;
-
- $.ajax({
-    url:AJAXURL,
-    type: "post",
-    jsonp: "callbackfun",
-    jsonpCallback:'callback',
-    dataType: "jsonp",
-    data: {
-        command:'findUserOrders',                           
-        authToken:Store.get('accessToken'),
-        jscallback:'callback',
-        agentId:'agent_wap',
-        status:0,
-        type:type,
-        firstResult:start,
-        maxResult:10
-    },
-    success: function(response) {
-        console.dir(response.data);
-        that.dataLength += response.data.length;
-
-        dataRecombinant(response.data,that);
-
-        that.busy = false;
-        that.spinnerFlag = false;
-
-    },
-    error: function(response) {
-       console.log('冷静，看看全部订单tab页哪里出错了');
-   }
+    console.log(textStatus+'--全部订单页');
+}
 
 });
 
 },
 checkLogin(){
+    var that = this;
     if(!Store.get('username')){
         $('.tips').show();
         $('.allOrderLists').hide();
+        that.busy = false;
+        that.spinnerFlag = false;
+
+        that.visible=false;
     }else{
-        //this.getAllOrderList();
+        this.loadMore(this.condition);
     }
 }
 }
@@ -318,13 +351,14 @@ var formatDatefun = function (date) {
 //数据重组
 var dataRecombinant = function(data,vm){
     //新对象、新数组
-    var obj = {};
+    var obj = {}, arr = [];
 
 
    // console.time('test');
 
     //遍历数据，按日期将数据加入新数组orderList中
     for(var i = 0, len = data.length; i < len ; i++){
+        
 
         var currentData = data[i], //获取每条数据，加入新数组
         currentKey = formatDatefun(currentData.orderTime),
@@ -340,14 +374,27 @@ var dataRecombinant = function(data,vm){
             orderList :  (hased ? obj[currentKey]['orderList'] : []).concat(currentData) //订单数据
         }   
     }
-    for(var key in obj){
-        vm.allOrderList.push(obj[key]);
-    }
-    console.log('数据源长度：'+vm.allOrderList.length);
 
-    console.log('数据源：'+JSON.stringify(vm.allOrderList));
+    if(vm.isScroll == true){
+        for(var key in obj){
+            vm.allOrderList.push(obj[key]);           
+        }
+
+        console.log('滚动了，数据源长度：'+vm.allOrderList.length);
+        return vm.allOrderList;
+    }else{
+        for(var key in obj){
+            arr.push(obj[key]);
+        }
+        
+        console.log('筛选，数据源长度：'+vm.allOrderList.length);
+        return arr;
+    }
+    
+
+    //console.log('数据源：'+JSON.stringify(vm.allOrderList));
    // console.timeEnd('test');
-   return vm.allOrderList;
+   //return vm.allOrderList;
 }
 
 </script>
@@ -361,6 +408,7 @@ var dataRecombinant = function(data,vm){
  #allOrderList .ol-content{
     position:relative;
     z-index: 2;
+    min-height: 4.4rem;
     height: auto;
 
     .md-list.md-triple-line.allOrderLists{
@@ -528,6 +576,7 @@ var dataRecombinant = function(data,vm){
 
     .tips{
         width: 100%;
+        min-height:4.2rem;
 
         line-height: 1rem;
         text-align: center;

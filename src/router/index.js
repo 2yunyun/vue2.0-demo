@@ -71,6 +71,16 @@ const router = new VueRouter({
         component: require('../components/mine/outstandingOrder.vue')
     },
     {
+        path: '/home/mine/balance',
+        name: '余额',
+        component: require('../components/mine/balance.vue')
+    },
+    {
+        path: '/home/mine/gold',
+        name: '金币',
+        component: require('../components/mine/gold.vue')
+    },
+    {
         path: '/home/zixun/zixun',
         name: '资讯',
         component: require('../components/zixun/zixun.vue'),

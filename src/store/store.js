@@ -26,6 +26,8 @@ const store = new Vuex.Store({
 				'全部订单': 'default',
 				'开奖订单': 'default',
 				'未开奖订单': 'default',
+				'金币': 'default',
+				'余额': 'default',
 				'photo-detail': 'default',
 				'login': 'default',
 				'unameLogin': 'default',
